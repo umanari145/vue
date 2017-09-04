@@ -1,0 +1,32 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.10/vue.js'></script>
+<script src='./vue.js'></script>
+<title>vue</title>
+</head>
+<body>
+	<div id="demo">
+		<p>{{message}}</p>
+		<input v-model="message">
+	</div>
+
+	<div id="app">
+		<li v-for="todo in todos">
+		    {{todo.text}}
+		</li>
+		<button v-on:click="showMessage">押してみよう</button>
+	</div>
+
+	<div id="app2">
+		<input v-model="input" v-on:keyup.enter="add">
+		<ul>
+			<li v-for="todo in todos">
+				<span>{{todo.text}}</span>
+				<button v-on:click="remove($index)">削除</button>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
+
