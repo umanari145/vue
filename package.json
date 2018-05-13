@@ -1,0 +1,35 @@
+{
+  "name": "vue_sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "vue.js",
+  "scripts": {
+    "gulp": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umanari145/vue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/umanari145/vue/issues"
+  },
+  "homepage": "https://github.com/umanari145/vue#readme",
+  "dependencies": {
+    "vue": "^2.5.16"
+  },
+  "devDependencies": {
+    "bootstrap": "^4.0.0-beta",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^4.0.1",
+    "gulp-webpack": "^1.5.0",
+    "jquery": "^3.3.1",
+    "node-sass": "^4.9.0",
+    "popper": "^1.0.1",
+    "popper.js": "^1.14.3",
+    "tether": "^1.4.4",
+    "vue-loader": "^15.0.10"
+  }
+}
