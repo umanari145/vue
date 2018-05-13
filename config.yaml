@@ -1,0 +1,5 @@
+dbinfo:
+  host: localhost
+  user: post_code_user
+  db: post_code
+  pass: ",2tG#w9|" #←カンマ対策のためダブルクオートでくくる
