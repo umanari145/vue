@@ -29,6 +29,7 @@
     "node-sass": "^4.9.0",
     "popper": "^1.0.1",
     "popper.js": "^1.14.3",
+    "sugar": "^2.0.4",
     "tether": "^1.4.4",
     "vue-loader": "^15.0.10"
   }

@@ -1,0 +1,43 @@
+<html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src='./js/build.js'></script>
+<link rel="stylesheet" href='./css/common.css'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.10/vue.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.0"></script>
+<script src='./vue2.js'></script>
+<title>vue</title>
+</head>
+<body>
+	<div id="app">
+		{{selectedPref}}
+		<div v-show="isshowpref">
+			<button class="btn btn-primary" v-on:click="checkPref">県選択</button>
+			<li v-for="pref in prefs">
+					<input type="radio" id="pref_{{$index}}" value={{pref}} v-model="selectedPref" >
+					<label for="pref_{{$index}}">{{pref}}</label>
+			</li>
+		</div>
+
+		{{selectedCities}}
+		<div v-show="isshowcity">
+			<button class="btn btn-primary" v-on:click="checkTown">市区町村選択</button>
+			<li v-for="city in cities">
+				<input type="checkbox" id="city_{{$index}}" value={{city}} v-model="selectedCities">
+				<label for="city_{{$index}}">{{city}}</label>
+			</li>
+		</div>
+
+		{{selectedTowns}}
+		<div v-show="isshowtown">
+			<button class="btn btn-primary" v-on:click="checkTown">字選択</button>
+			<li v-for="town in towns">
+				<input type="checkbox" id="town_{{$index}}" value={{city}} v-model="selectedTowns">
+				<label for="town_{{$index}}">{{town}}</label>
+			</li>
+		</div>
+
+	</div>
+</body>
+</html>
