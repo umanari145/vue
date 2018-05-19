@@ -4,7 +4,6 @@ window.onload = function() {
 	var citylink = 'http://localhost/vue/kenapi.py?area_type=city&pref='
 	var townlink = 'http://localhost/vue/kenapi.py?area_type=town&pref='
 
-
 	var app = new Vue({
 		el : '#app',
 		data : {
@@ -16,7 +15,8 @@ window.onload = function() {
 			isshowcity:0,
 			towns:[],
 			selectedTowns:[],
-			isshowtown:0
+			isshowtown:0,
+			groupCities:[]
 		},
 		methods:{
 			checkPref : function(){
@@ -34,9 +34,11 @@ window.onload = function() {
 			},
 			checkTown : function(){
 				if (this.selectedCities.length >0){
-					townlink2 = townlink + selectedPref + '&city=' 
+					var cityStr = this.selectedCities.join(",")
+					townlink2 = townlink + this.selectedPref + '&city=' + cityStr
 					this.$http.get(townlink2).then(function(response){
-						this.towns = response.data;
+						townsRes = response.data;
+						this.groupCities = Sugar.Array(townsRes).groupBy('city').raw
 						this.isshowcity = 0
 						this.isshowtown = 1
 					}, function(error){

@@ -5,6 +5,7 @@ window.Popper = require('popper.js');
 require('bootstrap');
 window.Sugar = require('Sugar')
 
-//var Vue = require('vue');
+//window.Vue = require('vue');
+
 //var appOptions = require('/Library/WebServer/Documents/vue/resources/js/app.vue')
 //var app = new Vue(appOptions).$mount('#app')

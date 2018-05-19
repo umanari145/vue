@@ -7,7 +7,8 @@ import json
 import cgitb
 
 cgitb.enable()
-print('Content-Type:application/json;charset=utf-8\n\n')
+#print('Content-Type:application/json;charset=utf-8\n\n')
+print('Content-Type:text/html;charset=utf-8\n\n')
 
 data = fileutil.loadYaml("config.yaml")
 dbinfo = data["dbinfo"]
@@ -30,17 +31,19 @@ class KEN():
         datas = db.select(sql)
         return list(map(lambda data: data['city'], datas))
 
-    def getTownList(self, pref, city):
-        sql = " SELECT DISTINCT(town) AS town FROM postcode WHERE pref = '" + pref + "' AND city = '" + city + "'"
+    def getTownList(self, pref, cityStr):
+        cities = cityStr.split(',')
+        cities = list(map(lambda v: "'" + v + "'", cities))
+        cities2 = ','.join(cities)
+        sql = " SELECT DISTINCT(town) AS town, city FROM postcode WHERE pref = '" + pref + "' AND city IN (" + cities2 + ")"
         datas = db.select(sql)
-        return list(map(lambda data: data['town'], datas))
+        return datas
 
 form = cgi.FieldStorage()
 areaType = form.getvalue("area_type")
 
 ken = KEN(db)
 res = None
-
 if areaType != None:
     if areaType == 'pref':
         res = ken.getPrefList()
@@ -50,9 +53,9 @@ if areaType != None:
             res = ken.getCityList(pref)
     elif areaType == 'town':
         pref = form.getvalue('pref')
-        city = form.getvalue('city')
-        if pref != None and city != None:
-            res = ken.getTownList(pref, city)
+        cityStr = form.getvalue('city')
+        if pref != None and cityStr != None:
+            res = ken.getTownList(pref, cityStr)
 
 if res != None:
     print(json.dumps(res))
