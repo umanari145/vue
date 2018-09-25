@@ -15,7 +15,7 @@ export default {
   },
   methods:{
     checkPref : function(){
-				var selectedPref = Sugar.String(this.selectedPref)
+        console.log("aaaaa")
 
     }
   }
