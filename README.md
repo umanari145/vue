@@ -39,3 +39,13 @@ npm run gulp
 ```
 npx webpack   --mode development  --config ./webpack.config.js
 ```
+
+### vueサンプル(npmライブラリ読み込み＋外部ファイル 不完全)
+- index4.html コンパイル式＋外部ファイル式
+- resoure4.js ソースファイル(Vue+VueResource)
+- build4.js 成果物
+
+#### コンパイルコマンド
+```
+npx webpack --mode development resource4.js --output ./build4.js
+```
