@@ -4,8 +4,8 @@ var webpack = require('gulp-webpack');
 var config = require('./config.js');
 var gulp_sass = require('gulp-sass');
 
-
-gulp.task('default',['css']);
+//defaultのタスクはcssコンパイルとjsのコンパイル
+gulp.task('default',['css','webpack']);
 
 gulp.task('webpack',function(){
     //js
