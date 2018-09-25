@@ -1,0 +1,53 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>vue</title>
+</head>
+<style type="text/css">
+.l_20{
+	display:inline-block;
+	width:20%
+}
+</style>
+<script src='./build4.js'></script>
+<script src='./vue4.js'></script>
+<body>
+	<div id="app">
+		{{selectedPref}}
+		<div v-show="isshowpref">
+			<button class="btn btn-primary" v-on:click="checkPref">県選択</button>
+			<div>
+				<li class="l_20" v-for="pref in prefs">
+					<input type="radio" id="pref_{{$index}}" value={{pref}} v-model="selectedPref" >
+					<label for="pref_{{$index}}">{{pref}}</label>
+				</li>
+			</div>
+		</div>
+
+		{{selectedCities}}
+		<div v-show="isshowcity">
+			<button class="btn btn-primary" v-on:click="checkTown">市区町村選択</button>
+			<div>
+			<li class="l_20" v-for="city in cities">
+				<input type="checkbox" id="city_{{city}}" value={{city}} v-model="selectedCities">
+				<label for="city_{{city}}">{{city}}</label>
+			</li>
+			</div>
+		</div>
+
+		{{selectedTowns}}
+		<div v-show="isshowtown">
+		<button v-show="selectedTowns.length > 0 " class="btn btn-primary" v-on:click="checkTown">確定する</button>
+		<button v-show="selectedTowns.length == 0 " class="btn btn-primary" disabled=disabled >確定する</button>
+			<div class="cities" v-for = " ( cityName, towns ) in groupCities">
+				<h3>{{cityName}}</h3>
+				<!--親のliと子が共に全く同じhtmlの場合二重ループがきかないので注意-->
+				<li class="town l_20" v-for=" (index2,town) in towns">
+					<input type="checkbox" id="town_{{town.town}}_{{town.city}}" value={{town.town}} v-model="selectedTowns">
+					<label for="town_{{town.town}}_{{town.city}}">{{town.town}}</label>
+				</li>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
