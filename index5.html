@@ -11,6 +11,8 @@
 	width:20%
 }
 </style>
+<script src='./build5.js'></script>
+<script src='./vue5.js'></script>
 <body>
 	<div id="app">
 
@@ -26,14 +28,34 @@
 			</div>
 		</div>
 
+		<!--市区町村-->
+		{{selectedCities}}
+		<div v-show="isshowcity">
+			<button class="btn btn-primary" v-on:click="checkTown">市区町村選択</button>
+			<div>
+			<li class="l_20" v-for="(city,index2) in cities">
+				<input type="checkbox" v-bind:id="'city_' + index2" v-bind:value=city  v-model="selectedCities">
+				<label v-bind:for="'city_' + index2">{{city}}</label>
+			</li>
+			</div>
+		</div>
 
+		<!--字-->
+		{{selectedTowns}}
+		<div v-show="isshowtown">
+		<button v-show="selectedTowns.length > 0 " class="btn btn-primary" v-on:click="checkTown">確定する</button>
+		<button v-show="selectedTowns.length == 0 " class="btn btn-primary" disabled=disabled >確定する</button>
+			<div class="cities" v-for = " ( cityName, towns ) in groupCities">
+				<h3>{{cityName}}</h3>
+				<!--親のliと子が共に全く同じhtmlの場合二重ループがきかないので注意-->
+				<li class="town l_20" v-for=" (index2,town) in towns">
+					<input type="checkbox" v-bind:id="'town_'+ town.town + '_' + town.city" v-bind:value=town.town v-model="selectedTowns">
+					<label v-bind:for="'town_' + town.town + '_' + town.city">{{town.town}}</label>
+				</li>
+			</div>
+		</div>
 
 	</div>
 
-
-
-
-	<script src='./build5.js'></script>
-	<script src='./vue5.js'></script>
 </body>
 </html>

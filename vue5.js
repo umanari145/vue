@@ -23,12 +23,10 @@ window.onload = function() {
 				var selectedPref = Sugar.String(this.selectedPref)
 				if (!selectedPref.isBlank().raw ){
 					citylink2 = citylink + selectedPref.raw
-					axios.get(citylink2).then(function(response){
+					axios.get(citylink2).then(response => {
 						this.cities = response.data;
 						this.isshowpref = 0
 						this.isshowcity = 1
-					}, function(error){
-						console.log(error.statusText);
 					});
 				}
 			},
@@ -36,22 +34,22 @@ window.onload = function() {
 				if (this.selectedCities.length >0){
 					var cityStr = this.selectedCities.join(",")
 					townlink2 = townlink + this.selectedPref + '&city=' + cityStr
-					this.$http.get(townlink2).then(function(response){
+					axios.get(townlink2).then(response => {
 						townsRes = response.data;
 						this.groupCities = Sugar.Array(townsRes).groupBy('city').raw
 						this.isshowcity = 0
 						this.isshowtown = 1
-					}, function(error){
-						console.log(error.statusText);
 					});
 				}
 			}
 		},
 		created:function(){
-			var tempPref = []
-			tempPref.push('北海道')
-			tempPref.push('青森')
-			this.prefs = tempPref
+			//↓のように書かないとthisがvue instanceをさしていないため
+			//画面の値が更新されない
+			//https://teratail.com/questions/103176
+			axios.get(link).then(response => {
+				this.prefs = response.data;
+			});
 		}
 	})
 }
