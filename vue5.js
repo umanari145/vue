@@ -23,7 +23,7 @@ window.onload = function() {
 				var selectedPref = Sugar.String(this.selectedPref)
 				if (!selectedPref.isBlank().raw ){
 					citylink2 = citylink + selectedPref.raw
-					this.$http.get(citylink2).then(function(response){
+					axios.get(citylink2).then(function(response){
 						this.cities = response.data;
 						this.isshowpref = 0
 						this.isshowcity = 1
@@ -49,9 +49,8 @@ window.onload = function() {
 		},
 		created:function(){
 			var tempPref = []
-			tempPref.push('千葉')
-			tempPref.push('東京')
-			tempPref.push('神奈川')
+			tempPref.push('北海道')
+			tempPref.push('青森')
 			this.prefs = tempPref
 		}
 	})
