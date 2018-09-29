@@ -1,4 +1,4 @@
-window.onload = function() {
+$(function(){
 
 	var link = 'http://localhost/vue/kenapi.py?area_type=pref'
 	var citylink = 'http://localhost/vue/kenapi.py?area_type=city&pref='
@@ -23,6 +23,7 @@ window.onload = function() {
 				var selectedPref = Sugar.String(this.selectedPref)
 				if (!selectedPref.isBlank().raw ){
 					citylink2 = citylink + selectedPref.raw
+					var hoge = $('#hogehogehoge').html()
 					axios.get(citylink2).then(response => {
 						this.cities = response.data;
 						this.isshowpref = 0
@@ -52,4 +53,4 @@ window.onload = function() {
 			});
 		}
 	})
-}
+})

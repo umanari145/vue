@@ -50,7 +50,7 @@ npx webpack   --mode development  --config ./webpack.config.js
 npx webpack --mode development resource4.js --output ./build4.js
 ```
 
-### vueサンプル(npmライブラリ読み込みvue,axios＋外部ファイル )
+### vueサンプル(npmライブラリ読み込みvue,axios,jquery,Sugar＋外部ファイル )
 - index5.html コンパイル式＋外部ファイル式
 - resoure5.js ソースファイル(Vue+axios+Sugar)
 - build5.js 成果物
