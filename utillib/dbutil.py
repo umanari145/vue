@@ -1,4 +1,4 @@
-import MySQLdb
+import mysql.connector
 
 #
 # データベースへの接続
@@ -11,7 +11,7 @@ class Dbutil():
         self.db = db
         self.passwd = passwd
 
-        tmpCon = MySQLdb.connect(
+        tmpCon = mysql.connector.connect(
             user = self.user,
             passwd = self.passwd,
             host = self.host,
@@ -20,8 +20,7 @@ class Dbutil():
 
         if tmpCon is not None:
             self.con = tmpCon
-            self.cursor = tmpCon.cursor(MySQLdb.cursors.DictCursor)
-
+            self.cursor = tmpCon.cursor(dictionary=True, buffered=True)
     #
     # dbを閉じる
     #
