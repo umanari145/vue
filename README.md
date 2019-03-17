@@ -5,6 +5,10 @@
 ### vueサンプル(超基礎)
 - index.html cdn読み込み+vueの一番簡単でシンプルなパターン
 
+### vueサンプル(基本文法)
+- d01.html 基本文法の説明
+- d01.js   基本文法の説明(javascipt)
+
 ### vueサンプル(都道府県パネル＋基本ライブラリの読み込み+vue)
 - index2.html 都道府県の選択による画面化 cdn読み込み(vue+vue.resource)
 
@@ -58,4 +62,17 @@ npx webpack --mode development resource4.js --output ./build4.js
 #### コンパイルコマンド
 ```
 npx webpack --mode development resource5.js --output ./build5.js
+```
+
+### vueサンプル(laravel-mix npmライブラリ読み込みvue,axios,jquery,Sugar＋component化)
+- vuecompo_sample/dist 成果物
+- vuecompo_sample/src/app.js JSのエントリーポイント
+- vuecompo_sample/src/component/CheckPref.vue コンポーネント
+- vuecompo_sample/src/js/checkpref.js checkprefのJS
+- vuecompo_sample/src/template/checkpref.html checkprefのhtml
+- vuecompo_sample/build.js 成果物
+
+#### コンパイルコマンド
+```
+npm run dev
 ```

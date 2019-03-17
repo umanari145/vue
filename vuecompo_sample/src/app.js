@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import axios from 'axios';
 import Sugar from 'Sugar';
-import checkPref from './CheckPref.vue'
+import $ from 'jquery';
+import checkPref from './component/CheckPref.vue'
 
-window.$ = window.jQuery = require('jquery');
+window.$ = window.jQuery = $;
 window.Vue = Vue
 window.axios = axios
 Vue.component('pref-component', checkPref)
