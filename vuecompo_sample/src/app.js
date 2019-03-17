@@ -4,6 +4,7 @@ import Sugar from 'Sugar';
 import $ from 'jquery';
 import checkPref from './component/CheckPref.vue'
 
+
 window.$ = window.jQuery = $;
 window.Vue = Vue
 window.axios = axios
