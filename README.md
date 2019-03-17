@@ -67,6 +67,7 @@ npx webpack --mode development resource5.js --output ./build5.js
 ### vueサンプル(laravel-mix npmライブラリ読み込みvue,axios,jquery,Sugar＋component化)
 - vuecompo_sample/dist 成果物
 - vuecompo_sample/src/app.js JSのエントリーポイント
+- vuecompo_sample/src/config.js 設定ファイル
 - vuecompo_sample/src/component/CheckPref.vue コンポーネント
 - vuecompo_sample/src/js/checkpref.js checkprefのJS
 - vuecompo_sample/src/template/checkpref.html checkprefのhtml
