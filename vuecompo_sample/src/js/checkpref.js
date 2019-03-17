@@ -1,8 +1,10 @@
 import Sugar from 'Sugar';
 
-var link = 'http://localhost/vue/kenapi.py?area_type=pref'
-var citylink = 'http://localhost/vue/kenapi.py?area_type=city&pref='
-var townlink = 'http://localhost/vue/kenapi.py?area_type=town&pref='
+const config = require('../config.js')
+
+var link = config.link
+var citylink = config.citylink
+var townlink = config.townlink
 
 export default {
   name: 'App',
