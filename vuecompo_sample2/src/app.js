@@ -4,18 +4,17 @@ import Sugar from 'Sugar';
 import $ from 'jquery';
 import firebase from 'firebase';
 import {firebaseConfig} from './config.js'
-import regist from './component/member/regist.vue'
-import list from './component/member/list.vue'
-
+//router内の処理よりも先にセットしたいのでここにかく
 firebase.initializeApp(firebaseConfig);
+
+import router from './router.js'
 
 window.$ = window.jQuery = $;
 window.Vue = Vue
 window.axios = axios
 window.firebase = firebase
-Vue.component('regist-component', regist)
-Vue.component('list-component', list)
 
 new Vue({
-    el:'#app'
+    el:'#app',
+    router
 })
