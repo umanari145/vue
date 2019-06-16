@@ -5,11 +5,17 @@ export default {
   name: 'App',
   methods:{
     registMember() {
-        alert("honjituha")
+        let res = this.memberRef.push({
+            name:this.name,
+            email:this.email,
+        })
+        alert('無事登録ができました。')
     }
   },
   created(){
-
+      this.database = firebase.database()
+      //console.log(this.database)
+      this.memberRef = this.database.ref('member')
   },
   data(){
     return {

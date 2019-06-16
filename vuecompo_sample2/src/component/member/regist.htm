@@ -2,11 +2,11 @@
     <ul>
         <li>
             <span>名前</span>
-            <input type="text" name="name">
+            <input type="text" name="name" v-model="name">
         </li>
         <li>
             <span>メールアドレス</span>
-            <input type="text" name="email">
+            <input type="text" name="email" v-model="email">
         </li>
         <li>
             <button v-on:click="registMember">
