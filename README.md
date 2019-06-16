@@ -71,9 +71,27 @@ npx webpack --mode development resource5.js --output ./build5.js
 - vuecompo_sample/src/component/CheckPref.vue コンポーネント
 - vuecompo_sample/src/component/checkpref.js checkprefのJS
 - vuecompo_sample/src/component/checkpref.html checkprefのhtml
+- vuecompo_sample/webpack.mix.js laravel-mixの設定ファイル
 - vuecompo_sample/build.js 成果物
 
 #### コンパイルコマンド
 ```
 npm run dev
+```
+
+### vueサンプル2(laravel-mix npmライブラリ読み込みvue,axios,jquery,Sugar＋component化+vue-router+Firebase)
+- vuecompo_sample2/dist 成果物
+- vuecompo_sample2/src/app.js JSのエントリーポイント
+- vuecompo_sample2/src/config.js 設定ファイル(主にfirebaseの情報)
+- vuecompo_sample2/src/component/regist(新規登録),list(一覧),edit(編集)のそれぞれのコンポーネント(vue)、html、js
+- vuecompo_sample2/webpack.mix.js laravel-mixの設定ファイル
+- vuecompo_sample2/.htaccess htaccess
+- vuecompo_sample2/build.js 成果物
+
+#### コンパイルコマンド
+```
+npm run dev
+#監視(app.jsで読み込んだファイル全てが対象に)
+npm run watch
+
 ```
