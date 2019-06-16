@@ -1,7 +1,10 @@
-'use strict'
-module.exports = {
-  API_KEY: '"production"',
-  link:'aaaa',
-  citylink:'bbbbb',
-  townlink:'ccccc'
-}
+
+export var firebaseConfig = {
+  apiKey: "***",
+  authDomain: "*****",
+  databaseURL: "*******",
+  projectId: "******",
+  storageBucket: "*****",
+  messagingSenderId: "*****",
+  appId: ":::::"
+};
