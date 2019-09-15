@@ -2,6 +2,8 @@ import Vue from 'vue'
 import axios from 'axios';
 import Sugar from 'Sugar';
 import $ from 'jquery';
+import store from './store/index.js';
+
 import firebase from 'firebase';
 import {firebaseConfig} from './config.js'
 //router内の処理よりも先にセットしたいのでここにかく
@@ -16,5 +18,6 @@ window.firebase = firebase
 
 new Vue({
     el:'#app',
+    store,
     router
 })
