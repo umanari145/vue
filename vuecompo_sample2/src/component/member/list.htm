@@ -1,8 +1,0 @@
-<div>
-    <ul>
-        <li v-for="(member,index) in member_list">
-            {{member.name}}   {{member.email}}
-            <router-link :to=" 'edit/'+ member.hash_key ">詳細</router-link>
-        </li>
-    </ul>
-</div>
