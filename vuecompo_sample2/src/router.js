@@ -5,6 +5,7 @@ import regist from './component/member/regist.vue'
 import edit from './component/member/edit.vue'
 import list from './component/member/list.vue'
 import todo from './component/todo.vue'
+import mixibase from './component/mixibase.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,10 @@ const router = new VueRouter({
         {
             path:'/todo',
             component:todo
+        },
+        {
+            path:'/mixisample',
+            component:mixibase
         },
         {
             path:'/regist',
