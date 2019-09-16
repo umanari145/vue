@@ -1,12 +1,29 @@
 export const mutations = {
-  addTask (state, name) {
+  addTask (state, {name, labelIds}) {
       state.tasks.push(
           {
               id:state.nextTaskId,
               name:name,
+              labelIds:labelIds,
               done:false
           }
       )
       state.nextTaskId++
   },
+  toggleTaskStatus(state, id) {
+      const filtered = state.tasks.filter(task => {
+          return task.id === id
+      })
+
+      filtered.forEach(task => {
+          task.done = !task.done
+      })
+  },
+  addLabel(state, {text}) {
+      state.labels.push({
+          id:state.nextLabelId,
+          text:text
+      })
+      state.nextLabelId++
+  }
 };

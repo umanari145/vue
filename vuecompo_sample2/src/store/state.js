@@ -2,14 +2,31 @@ export const state = {
   tasks:[
       {
         'id':1,
+        'labelIds':[1,2],
         'name':'牛乳を買う',
         'done':false
       },
       {
           'id':2,
+          'labelIds':[1,3],
           'name':'本を買う',
           'done':true
       }
   ],
-  nextTaskId:3
+  labels: [
+      {
+          'id':1,
+          'text':'買い物'
+      },
+      {
+          'id':2,
+          'text':'食料'
+      },
+      {
+          'id':3,
+          'text':'本'
+      }
+  ],
+  nextTaskId:3,
+  nextLabelId:4
 };
