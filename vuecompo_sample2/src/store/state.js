@@ -28,5 +28,6 @@ export const state = {
       }
   ],
   nextTaskId:3,
-  nextLabelId:4
+  nextLabelId:4,
+  filter:null
 };

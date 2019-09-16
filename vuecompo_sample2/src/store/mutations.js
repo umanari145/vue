@@ -25,5 +25,8 @@ export const mutations = {
           text:text
       })
       state.nextLabelId++
+  },
+  changeFilter(state, {filter}) {
+      state.filter = filter
   }
 };
