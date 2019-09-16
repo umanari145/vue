@@ -60,13 +60,13 @@
     export default {
         computed:{
             tasks() {
-                return this.$store.getters.filteredTasks
+                return this.$store.getters['example/filteredTasks']
             },
             labels() {
-                return this.$store.state.labels
+                return this.$store.state.example.labels
             },
             filter() {
-                return this.$store.state.filter
+                return this.$store.state.example.filter
             }
         },
         data(){
@@ -78,7 +78,7 @@
         },
         methods:{
             addTask() {
-                this.$store.commit('addTask', {
+                this.$store.commit('example/addTask', {
                     name:this.newTaskname,
                     labelIds:this.newTaskLabelIds
                 })
@@ -86,26 +86,26 @@
                 this.newTaskLabelIds = []
             },
             addLabel() {
-                this.$store.commit('addLabel', {text:this.newLabelText})
+                this.$store.commit('example/addLabel', {text:this.newLabelText})
                 this.newLabelText = ''
             },
             toggleTaskStatus(task) {
-                this.$store.commit('toggleTaskStatus',task.id)
+                this.$store.commit('example/toggleTaskStatus',task.id)
             },
             getLaralbelText(id) {
                 const label = this.labels.filter(label => label.id === id)[0]
                 return label? label.text :''
             },
             changeFilter(labelId) {
-                this.$store.commit('changeFilter', {
+                this.$store.commit('example/changeFilter', {
                     filter:labelId
                 })
             },
             save() {
-                this.$store.dispatch('save')
+                this.$store.dispatch('example/save')
             },
             restore() {
-                this.$store.dispatch('restore')
+                this.$store.dispatch('example/restore')
             }
         }
     }

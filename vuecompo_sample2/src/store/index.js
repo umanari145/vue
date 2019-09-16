@@ -7,9 +7,16 @@ import {actions} from './actions.js'
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-    state,
-    getters,
-    mutations,
-    actions
-});
+const module = {
+    modules:{
+        example:{
+            namespaced:true,
+            state:state,
+            getters:getters,
+            mutations:mutations,
+            actions:actions
+        }
+    }
+}
+
+export default new Vuex.Store(module);
