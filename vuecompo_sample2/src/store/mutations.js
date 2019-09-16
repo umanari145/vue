@@ -28,5 +28,11 @@ export const mutations = {
   },
   changeFilter(state, {filter}) {
       state.filter = filter
+  },
+  restore(state, {tasks, labels, nextTaskId, nextLabelId}) {
+      state.tasks = tasks
+      state.labels = labels
+      state.nextTaskId = nextTaskId
+      state.nextLabelId = nextLabelId
   }
 };
