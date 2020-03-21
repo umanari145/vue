@@ -25,10 +25,11 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/sugar/2.0.6/sugar.min.js" integrity="sha256-5AA1KsUNzfgrGh3+JagBdys+ArLrYa9Q2JkKfPioAS8=" crossorigin="anonymous">
  </script>
 <script src="https://unpkg.com/vue"></script>
+<script src="./hoge.js"></script>
 <script src="./report.js"></script>
 <body>
-	<div id = "app" v-cloak>
-		<div id="constant_reports">
+	<div id="app" v-cloak>
+		<div id="constant_reports" @click="sumrize" @change="sumrize">
 			<div class="" @click="addRow">
 				追加
 			</div>
@@ -43,7 +44,7 @@
 					<input type="text" v-model="each_constarnt_report.date">
 				</li>
 				<li>
-					<select v-model="each_constarnt_report.type" @change="sumrize()">
+					<select v-model="each_constarnt_report.type">
 						<option value=""></option>
 						<option value="1">返金</option>
 						<option value="2">未収</option>
@@ -51,20 +52,21 @@
 					</select>
 				</li>
 				<li>
-					<input type="text" v-model="each_constarnt_report.price" @change="calcTax(index),sumrize()">
+					<input type="text" v-model="each_constarnt_report.price" @change="calcTax(index)">
 				</li>
 				<li>
-					<input type="text" v-model="each_constarnt_report.tax" @change="sumrize()">
+					<input type="text" v-model="each_constarnt_report.tax">
 				</li>
 				<li>
 					<button type="button" @click="deleteRow(index)">削除</button>
 				</li>
 			</ul>
 
-			<div >
+			<div>
 				合計 {{amountSum}}
 			</div>
 		</div>
+		<hoge></hoge>
 	</div>
 </body>
 </html>

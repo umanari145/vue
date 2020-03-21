@@ -1,5 +1,7 @@
 $(function(){
 
+	Vue.component('hoge',hogeComponent)
+
 	var app = new Vue({
 		el : '#app',
 		data : {
