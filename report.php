@@ -73,12 +73,16 @@
 		<div>
 			<label for="has_debt">
 				借金返済の必要あり
-				<input type="checkbox" value="1" id="has_debt" :disabled="hasDebt()">
+				<input type="checkbox" value="1" v-model="has_debt_check" id="has_debt" :disabled="hasDebt()" @change="alertDebt();">
 			</label>
 			<ul v-for="(each_debt, debt_index) in debt_lists">
 				<li style="display:inline-block;">
 					<input type="text" v-model="each_debt.debt_price" :disabled="hasDebt()">
 				</li>
+				<li style="display:inline-block;">
+					借金残 {{remaing_debt(debt_index)}}
+				</li>
+				<input type="hidden" :value="remaing_debt(debt_index)">
 				<li style="display:inline-block;">
 					<button @click="deleteDebtRow(debt_index)">
 						削除
@@ -86,7 +90,7 @@
 				</li>
 			</ul>
 		</div>
-		<button @click="addDebtRow()" :disabled="canAddDelete()">
+		<button @click="addDebtRow()" :disabled="disabledAddDelete()">
 			追加
 		</button>
 	</div>

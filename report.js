@@ -7,9 +7,21 @@ $(function(){
 		data : {
 			constant_reports:[],
 			amountSum:0,
-			debt_lists:[]
+			debt_lists:[],
+			has_debt_check:false
 		},
 		methods:{
+			remaing_debt(debt_index){
+				let debt = this.amountSum;
+				let debt_remaing = 0;
+				for(var i = 0; i <= debt_index; i++) {
+					let subtract =  this.debt_lists[i]['debt_price'];
+					if (this.divNum(subtract)) {
+						debt_remaing += parseInt(subtract);
+					}
+				}
+  			  	return debt - debt_remaing;
+			},
 			addRow() {
 				this.constant_reports.push({
 					'date':'',
@@ -70,9 +82,22 @@ $(function(){
 			deleteDebtRow(debt_index) {
 				this.debt_lists.splice(debt_index, 1);
 			},
-			canAddDelete() {
-				return this.hasDebt;
+			disabledAddDelete() {
+				if (this.hasDebt() || this.has_debt_check == false) {
+					return true;
+				} else {
+					return false;
+				}
+			},
+			alertDebt() {
+				if (this.has_debt_check == false) {
+					if(!window.confirm('借金返済の列を削除しますか？')) {
+						return false
+					}
+					this.debt_lists = [];
+				}
 			}
+
 		},
 		created:function(){
 			this.constant_reports = [
