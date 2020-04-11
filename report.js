@@ -8,7 +8,8 @@ $(function(){
 			constant_reports:[],
 			amountSum:0,
 			debt_lists:[],
-			has_debt_check:false
+			has_debt_check:false,
+			last_remaining:''
 		},
 		methods:{
 			remaing_debt(debt_index){
@@ -20,6 +21,7 @@ $(function(){
 						debt_remaing += parseInt(subtract);
 					}
 				}
+				this.debt_lists[debt_index]['remaining'] = debt - debt_remaing;
   			  	return debt - debt_remaing;
 			},
 			addRow() {
@@ -76,18 +78,33 @@ $(function(){
 			},
 			addDebtRow() {
 				this.debt_lists.push({
-					'price':''
+					'debt_price':'',
+					'remaining':''
 				})
 			},
 			deleteDebtRow(debt_index) {
 				this.debt_lists.splice(debt_index, 1);
 			},
 			disabledAddDelete() {
-				if (this.hasDebt() || this.has_debt_check == false) {
+				if (this.hasDebt() || this.has_debt_check == false || this.isRemaining()) {
 					return true;
 				} else {
 					return false;
 				}
+			},
+			isRemaining() {
+				let debt = this.amountSum;
+				let remainingSum =
+					Sugar.Array(this.debt_lists)
+					.filter((v) => {
+						return this.divNum(v['debt_price']);
+					}).map(function(v,k){
+						return parseInt(v['debt_price']);
+	 				}).sum(function(v){
+						return v['debt_price']
+					})
+
+				return debt - remainingSum.raw <= 0
 			},
 			alertDebt() {
 				if (this.has_debt_check == false) {

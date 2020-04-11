@@ -82,7 +82,7 @@
 				<li style="display:inline-block;">
 					借金残 {{remaing_debt(debt_index)}}
 				</li>
-				<input type="hidden" :value="remaing_debt(debt_index)">
+				<input type="hidden" v-model="each_debt.remaining">
 				<li style="display:inline-block;">
 					<button @click="deleteDebtRow(debt_index)">
 						削除
@@ -90,6 +90,7 @@
 				</li>
 			</ul>
 		</div>
+
 		<button @click="addDebtRow()" :disabled="disabledAddDelete()">
 			追加
 		</button>
