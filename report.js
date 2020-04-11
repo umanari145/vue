@@ -6,7 +6,8 @@ $(function(){
 		el : '#app',
 		data : {
 			constant_reports:[],
-			amountSum:0
+			amountSum:0,
+			debt_lists:[]
 		},
 		methods:{
 			addRow() {
@@ -20,20 +21,17 @@ $(function(){
 			deleteRow(index) {
 				this.constant_reports.splice(index,1)
 			},
-			convertNumber(str) {
-				return Sugar.Number.format(str);
-			},
-			convertNum(str) {
+			divNum(str) {
 				if (str !== '' && str !== undefined && isNaN(str) === false) {
-					return parseInt(str);
+					return true;
 				} else {
-					return '';
+					return false;
 				}
 			},
 			calcTax(index) {
 				let price = this.constant_reports[index]['price']
-				if (this.convertNum(price)) {
-					let tax = Math.floor(this.convertNum(price) * 0.1);
+				if (this.divNum(price)) {
+					let tax = Math.floor(parseInt(price) * 0.1);
 					this.constant_reports[index]['tax'] = tax
 				}
 			},
@@ -44,6 +42,9 @@ $(function(){
 	 				.filter(function(v){
 						return v.type == '1'
 					})
+					.filter((v) => {
+						return this.divNum(v['price']) && this.divNum(v['tax']);
+					})
 	 				.map(function(v,k){
 						v['total'] = parseInt(v['price']) + parseInt(v['tax'])
 						return v
@@ -51,6 +52,26 @@ $(function(){
 						return v['total']
 					})
 				this.amountSum = amountSum.raw
+			},
+			hasDebt() {
+				if(this.amountSum >= 1) {
+					//借金の必要あり
+					return false;
+				} else {
+					//借金の必要なし(だからdisabled)
+					return true;
+				}
+			},
+			addDebtRow() {
+				this.debt_lists.push({
+					'price':''
+				})
+			},
+			deleteDebtRow(debt_index) {
+				this.debt_lists.splice(debt_index, 1);
+			},
+			canAddDelete() {
+				return this.hasDebt;
 			}
 		},
 		created:function(){
@@ -80,6 +101,9 @@ $(function(){
 					'tax':40
 				}
 			]
+		},
+		mounted:function() {
+			this.sumrize();
 		}
 	})
 })

@@ -30,9 +30,9 @@
 <body>
 	<div id="app" v-cloak>
 		<div id="constant_reports" @click="sumrize" @change="sumrize">
-			<div class="" @click="addRow">
+			<button  @click="addRow">
 				追加
-			</div>
+			</button>
 			<ul>
 				<li>年月</li>
 				<li>タイプ</li>
@@ -68,7 +68,27 @@
 				借金合計 {{amountSum}}
 			</div>
 		</div>
-		<hoge></hoge>
+		<hoge>
+		</hoge>
+		<div>
+			<label for="has_debt">
+				借金返済の必要あり
+				<input type="checkbox" value="1" id="has_debt" :disabled="hasDebt()">
+			</label>
+			<ul v-for="(each_debt, debt_index) in debt_lists">
+				<li style="display:inline-block;">
+					<input type="text" v-model="each_debt.debt_price" :disabled="hasDebt()">
+				</li>
+				<li style="display:inline-block;">
+					<button @click="deleteDebtRow(debt_index)">
+						削除
+					</button>
+				</li>
+			</ul>
+		</div>
+		<button @click="addDebtRow()" :disabled="canAddDelete()">
+			追加
+		</button>
 	</div>
 </body>
 </html>
