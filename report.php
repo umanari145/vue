@@ -46,13 +46,15 @@
 				<li>
 					<select v-model="each_constarnt_report.type">
 						<option value=""></option>
-						<option value="1">返金</option>
-						<option value="2">未収</option>
-						<option value="3">振込</option>
+						<option value="1">借金</option>
+						<option value="2">完済</option>
+						<option value="3">未納</option>
 					</select>
 				</li>
 				<li>
-					<input type="text" v-model="each_constarnt_report.price" @change="calcTax(index)">
+					<input type="text"
+					v-model="each_constarnt_report.price"
+					@change="calcTax(index)">
 				</li>
 				<li>
 					<input type="text" v-model="each_constarnt_report.tax">
@@ -63,7 +65,7 @@
 			</ul>
 
 			<div>
-				合計 {{amountSum}}
+				借金合計 {{amountSum}}
 			</div>
 		</div>
 		<hoge></hoge>

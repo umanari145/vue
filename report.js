@@ -20,10 +20,22 @@ $(function(){
 			deleteRow(index) {
 				this.constant_reports.splice(index,1)
 			},
+			convertNumber(str) {
+				return Sugar.Number.format(str);
+			},
+			convertNum(str) {
+				if (str !== '' && str !== undefined && isNaN(str) === false) {
+					return parseInt(str);
+				} else {
+					return '';
+				}
+			},
 			calcTax(index) {
 				let price = this.constant_reports[index]['price']
-				let tax = price * 0.1
-				this.constant_reports[index]['tax'] = tax
+				if (this.convertNum(price)) {
+					let tax = Math.floor(this.convertNum(price) * 0.1);
+					this.constant_reports[index]['tax'] = tax
+				}
 			},
 			sumrize() {
 				let amountSum = 0;
