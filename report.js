@@ -98,13 +98,11 @@ $(function(){
 					Sugar.Array(this.debt_lists)
 					.filter((v) => {
 						return this.divNum(v['debt_price']);
-					}).map(function(v,k){
-						return parseInt(v['debt_price']);
 	 				}).sum(function(v){
-						return v['debt_price']
+						return parseInt(v['debt_price']);
 					})
 
-				return debt - remainingSum.raw <= 0
+				return (debt - remainingSum.raw <= 0);
 			},
 			alertDebt() {
 				if (this.has_debt_check == false) {
