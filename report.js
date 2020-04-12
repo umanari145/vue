@@ -86,7 +86,7 @@ $(function(){
 				this.debt_lists.splice(debt_index, 1);
 			},
 			disabledAddDelete() {
-				if (this.hasDebt() || this.has_debt_check == false || this.isRemaining()) {
+				if (this.hasDebt() || this.has_debt_check == false || this.isRemaining() || this.hasBlank()) {
 					return true;
 				} else {
 					return false;
@@ -103,6 +103,14 @@ $(function(){
 					})
 
 				return (debt - remainingSum.raw <= 0);
+			},
+			hasBlank() {
+				let blankDebt = Sugar.Array(this.debt_lists)
+				.count((v) => {
+					return this.divNum(v['debt_price']) == false;
+				})
+				return blankDebt >= 1;
+
 			},
 			alertDebt() {
 				if (this.has_debt_check == false) {
