@@ -98,6 +98,11 @@ npm run watch
 
 ```
 ### よくある帳票系の計算プログラム(cdnのsugar+vue)
-
+コンパイルをせずにjQueryのように手軽に使えるかどうかの実験
 - report.js
 - report.php
+
+### よくある顧客管理のプログラム(cdnのsugar+vue)
+コンパイルをせずにjQueryのように手軽に使えるかどうかの実験
+- customer.js
+- customer.php
