@@ -25,6 +25,7 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/sugar/2.0.6/sugar.min.js" integrity="sha256-5AA1KsUNzfgrGh3+JagBdys+ArLrYa9Q2JkKfPioAS8=" crossorigin="anonymous">
  </script>
 <script src="https://unpkg.com/vue"></script>
+<script src="./vue_common.js"></script>
 <script src="./hoge.js"></script>
 <script src="./report.js"></script>
 <body>
@@ -81,7 +82,6 @@
 
 			<input type="text" v-model="lump_amount">
 		</div>
-
 
 		<div>
 			<label for="has_debt">

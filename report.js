@@ -2,6 +2,8 @@ $(function(){
 
 	Vue.component('hoge',hogeComponent)
 
+	var Util = new Utility();
+
 	var app = new Vue({
 		el : '#app',
 		data : {
@@ -20,7 +22,7 @@ $(function(){
 				let debt_remaing = 0;
 				for(var i = 0; i <= debt_index; i++) {
 					let subtract =  this.debt_lists[i]['debt_price'];
-					if (this.divNum(subtract)) {
+					if (Util.divNum(subtract)) {
 						debt_remaing += parseInt(subtract);
 					}
 				}
@@ -38,16 +40,10 @@ $(function(){
 			deleteRow(index) {
 				this.constant_reports.splice(index,1)
 			},
-			divNum(str) {
-				if (str !== '' && str !== undefined && isNaN(str) === false) {
-					return true;
-				} else {
-					return false;
-				}
-			},
+
 			calcTax(index) {
 				let price = this.constant_reports[index]['price']
-				if (this.divNum(price)) {
+				if (Util.divNum(price)) {
 					let tax = Math.floor(parseInt(price) * 0.1);
 					this.constant_reports[index]['tax'] = tax
 				}
@@ -60,7 +56,7 @@ $(function(){
 						return v.type == '1'
 					})
 					.filter((v) => {
-						return this.divNum(v['price']) && this.divNum(v['tax']);
+						return Util.divNum(v['price']) && Util.divNum(v['tax']);
 					})
 	 				.map(function(v,k){
 						v['total'] = parseInt(v['price']) + parseInt(v['tax'])
@@ -102,7 +98,12 @@ $(function(){
 				this.debt_lists.splice(debt_index, 1);
 			},
 			disabledAddDelete() {
-				if (this.hasDebtIncLump() || this.has_debt_check == false || this.isRemaining() || this.hasBlank()) {
+				if (this.hasDebtIncLump()
+				|| this.has_debt_check == false
+				|| this.isRemaining()
+				|| this.hasBlank()
+				|| this.debt_lists.length >=4
+			) {
 					return true;
 				} else {
 					return false;
@@ -113,7 +114,7 @@ $(function(){
 				let remainingSum =
 					Sugar.Array(this.debt_lists)
 					.filter((v) => {
-						return this.divNum(v['debt_price']);
+						return Util.divNum(v['debt_price']);
 	 				}).sum(function(v){
 						return parseInt(v['debt_price']);
 					})
@@ -123,7 +124,7 @@ $(function(){
 			hasBlank() {
 				let blankDebt = Sugar.Array(this.debt_lists)
 				.count((v) => {
-					return this.divNum(v['debt_price']) == false;
+					return Util.divNum(v['debt_price']) == false;
 				})
 				return blankDebt >= 1;
 			},
