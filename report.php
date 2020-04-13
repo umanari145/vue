@@ -70,14 +70,27 @@
 		</div>
 		<hoge>
 		</hoge>
+
+		<div class="">
+			<select v-model="lump_sum_repayment_type">
+				<option value=""></option>
+				<option value="1" :disabled="hasDebt()">一括返済</option>
+				<option value="2">倒産</option>
+				<option value="3">債権譲渡</option>
+			</select>
+
+			<input type="text" v-model="lump_amount">
+		</div>
+
+
 		<div>
 			<label for="has_debt">
-				借金返済の必要あり
-				<input type="checkbox" value="1" v-model="has_debt_check" id="has_debt" :disabled="hasDebt()" @change="alertDebt();">
+				個別借金返済の必要あり
+				<input type="checkbox" value="1" v-model="has_debt_check" id="has_debt" :disabled="hasDebtIncLump()" @change="alertDebt();">
 			</label>
 			<ul v-for="(each_debt, debt_index) in debt_lists">
 				<li style="display:inline-block;">
-					<input type="text" v-model="each_debt.debt_price" :disabled="hasDebt()">
+					<input type="text" v-model="each_debt.debt_price" :disabled="hasDebtIncLump()">
 				</li>
 				<li style="display:inline-block;">
 					借金残 {{remaing_debt(debt_index)}}

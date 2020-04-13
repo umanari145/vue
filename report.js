@@ -7,13 +7,16 @@ $(function(){
 		data : {
 			constant_reports:[],
 			amountSum:0,
+			amountSumIncLump:0,
 			debt_lists:[],
+			lump_sum_repayment_type:'',
+			lump_amount:'',
 			has_debt_check:false,
-			last_remaining:''
+			last_remaining:'',
 		},
 		methods:{
 			remaing_debt(debt_index){
-				let debt = this.amountSum;
+				let debt = this.amountSumIncLump;
 				let debt_remaing = 0;
 				for(var i = 0; i <= debt_index; i++) {
 					let subtract =  this.debt_lists[i]['debt_price'];
@@ -76,6 +79,19 @@ $(function(){
 					return true;
 				}
 			},
+			hasDebtIncLump() {
+				if(this.lump_sum_repayment_type == '1') {
+					this.amountSumIncLump = this.amountSum - this.lump_amount;
+				} else {
+					this.amountSumIncLump = this.amountSum;
+				}
+
+				if (this.amountSumIncLump >= 1) {
+					return false;
+				} else {
+					return true;
+				}
+			},
 			addDebtRow() {
 				this.debt_lists.push({
 					'debt_price':'',
@@ -86,14 +102,14 @@ $(function(){
 				this.debt_lists.splice(debt_index, 1);
 			},
 			disabledAddDelete() {
-				if (this.hasDebt() || this.has_debt_check == false || this.isRemaining() || this.hasBlank()) {
+				if (this.hasDebtIncLump() || this.has_debt_check == false || this.isRemaining() || this.hasBlank()) {
 					return true;
 				} else {
 					return false;
 				}
 			},
 			isRemaining() {
-				let debt = this.amountSum;
+				let debt = this.amountSumIncLump;
 				let remainingSum =
 					Sugar.Array(this.debt_lists)
 					.filter((v) => {
@@ -110,7 +126,6 @@ $(function(){
 					return this.divNum(v['debt_price']) == false;
 				})
 				return blankDebt >= 1;
-
 			},
 			alertDebt() {
 				if (this.has_debt_check == false) {
@@ -121,6 +136,19 @@ $(function(){
 				}
 			}
 
+		},
+		watch:{
+			'amountSumIncLump':function(val) {
+				if(this.has_debt_check == true &&
+					this.debt_lists.length >=1 &&
+					val <= 0) {
+					if(!window.confirm('借金がなくなり個別の借金は不必要になりそうです。クリアして構いませんか？')) {
+						return false;
+					}
+					this.has_debt_check = false;
+					this.debt_lists = [];
+				}
+			}
 		},
 		created:function(){
 			this.constant_reports = [
