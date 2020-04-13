@@ -18,6 +18,7 @@
                     :id = "`pref_${pref.prefCode}`"
                     v-model="selected_prefs[target_index]"
                     :value="pref.prefCode"
+                    :disabled="disableCheckPref(pref.prefCode)"
                 >
                 {{pref.prefName}}
                 </label>

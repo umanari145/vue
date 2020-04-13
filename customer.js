@@ -47,6 +47,17 @@ $(function(){
 					this.is_show_spinner = 0;
 				})
 			},
+			disableCheckPref(prefCode) {
+				if (this.selected_prefs[this.target_index].length >= 3) {
+					if (this.selected_prefs[this.target_index].indexOf(prefCode) < 0) {
+						return true;
+					} else {
+						return false
+					}
+				} else {
+					return false;
+				}
+			},
 			selectPref() {
 				this.selected_prefs_str[this.target_index] = [];
 				for(var i = 0 ;i < this.selected_prefs[this.target_index].length; i++) {
