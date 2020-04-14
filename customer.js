@@ -85,6 +85,10 @@ $(function(){
 						for(var pref_cd in data) {
 							this.cities[this.target_index][pref_cd] = {};
 							this.cities[this.target_index][pref_cd] = data[pref_cd]['result'];
+							if (this.selected_cities[this.target_index][pref_cd] == null ||
+								this.selected_cities[this.target_index][pref_cd] == undefined) {
+								this.selected_cities[this.target_index][pref_cd] = [];
+							}
 						}
 						this.is_pref_active = false;
 						this.is_pref_disabled = true;
@@ -106,7 +110,7 @@ $(function(){
 		created:function(){
 			for(var i = 1; i <= 4; i++) {
 				this.selected_prefs[i] =[];
-				this.selected_cities[i] =[];
+				this.selected_cities[i] ={};
 				this.selected_prefs_str[i] =[];
 				this.selected_prefs_str_concat[i] = "";
 			}
