@@ -11,13 +11,15 @@ $(function(){
 			is_show_modal:false,
 			is_show_spinner:0,
 			prefs:[],
+			cities:{},
 			is_pref_active:true,
 			is_pref_disabled:false,
-			is_town_active:false,
-			is_town_disabled:true,
+			is_city_active:false,
+			is_city_disabled:true,
 			selected_prefs:[],
 			selected_prefs_str:[],
 			selected_prefs_str_concat:[],
+			selected_cities:[],
 			target_index:'',
 			master_pref_hash:{},
 		},
@@ -78,7 +80,16 @@ $(function(){
 					type:'GET',
 				}).done((res) => {
 					if (res !== null) {
-						data = JSON.parse(res);
+						let data = JSON.parse(res);
+						this.cities[this.target_index] = {};
+						for(var pref_cd in data) {
+							this.cities[this.target_index][pref_cd] = {};
+							this.cities[this.target_index][pref_cd] = data[pref_cd]['result'];
+						}
+						this.is_pref_active = false;
+						this.is_pref_disabled = true;
+						this.is_city_active = true;
+						this.is_city_disabled = false;
 					}
 				}).fail((data) => {
 					alert("サーバーとの通信に失敗しました。")
@@ -95,6 +106,7 @@ $(function(){
 		created:function(){
 			for(var i = 1; i <= 4; i++) {
 				this.selected_prefs[i] =[];
+				this.selected_cities[i] =[];
 				this.selected_prefs_str[i] =[];
 				this.selected_prefs_str_concat[i] = "";
 			}

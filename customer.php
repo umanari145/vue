@@ -27,7 +27,7 @@
 li{
     list-style-type: none;
 }
-.pref_label{
+.pref_label, .city_label{
     width: 200px;
 }
 </style>
