@@ -105,12 +105,19 @@ $(function(){
 				this.selected_prefs[i] = [];
 				this.selected_prefs_str[i] = '';
 				Vue.set(this.selected_prefs_str_concat, i, '');
+			},
+			disableCheckCity(pref_cd) {
+				if (this.selected_cities[this.target_index][pref_cd].length >=4) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		},
 		created:function(){
 			for(var i = 1; i <= 4; i++) {
 				this.selected_prefs[i] =[];
-				this.selected_cities[i] ={};
+				this.selected_cities[i] = {};
 				this.selected_prefs_str[i] =[];
 				this.selected_prefs_str_concat[i] = "";
 			}
