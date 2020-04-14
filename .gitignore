@@ -1,5 +1,6 @@
 /node_modules
 /**/node_modules
+/area_cached_dir/*
 /vuecompo_sample/src/config.js
 /vuecompo_sample2/src/config.js
 /vuecompo_sample2/src/firebase_key.json

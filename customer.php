@@ -19,7 +19,6 @@
 <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
 
 <script src="./vue_common.js"></script>
-<script src="./areaModalConfig.js"></script>
 <script src="./customer.js"></script>
 <style type="text/css">
 [v-cloak] {

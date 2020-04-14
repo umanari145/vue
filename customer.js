@@ -11,6 +11,10 @@ $(function(){
 			is_show_modal:false,
 			is_show_spinner:0,
 			prefs:[],
+			is_pref_active:true,
+			is_pref_disabled:false,
+			is_town_active:false,
+			is_town_disabled:true,
 			selected_prefs:[],
 			selected_prefs_str:[],
 			selected_prefs_str_concat:[],
@@ -27,18 +31,18 @@ $(function(){
 			getPref() {
 				this.is_show_spinner = 1;
 				$.ajax({
-					url:apiUrl + 'prefectures',
+					url:'/vue/areaApi.php?area_mode=pref',
 					type:'GET',
-					headers:{
-						'X-API-KEY':apiKey
-					}
-				}).done((data) => {
-					if (data['result'] !== null && data['result'].length > 0) {
-						this.prefs = data['result'];
-						for(var i=0; i < data['result'].length; i++) {
-							let prefCode = data['result'][i]['prefCode'];
-							let prefName = data['result'][i]['prefName'];
-							this.master_pref_hash[prefCode] = prefName;
+				}).done((res) => {
+					if (res !== null) {
+						data = JSON.parse(res);
+						if (data['result'] !== null && data['result'].length > 0) {
+							this.prefs = data['result'];
+							for(var i=0; i < data['result'].length; i++) {
+								let prefCode = data['result'][i]['prefCode'];
+								let prefName = data['result'][i]['prefName'];
+								this.master_pref_hash[prefCode] = prefName;
+							}
 						}
 					}
 				}).fail((data) => {
@@ -48,7 +52,7 @@ $(function(){
 				})
 			},
 			disableCheckPref(prefCode) {
-				if (this.selected_prefs[this.target_index].length >= 3) {
+				if (this.selected_prefs[this.target_index].length >= 2) {
 					if (this.selected_prefs[this.target_index].indexOf(prefCode) < 0) {
 						return true;
 					} else {
