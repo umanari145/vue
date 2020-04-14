@@ -29,7 +29,7 @@
                     </label>
                 </li>
                 <b-button variant="outline-primary" @click="selectPref()">選択</b-button>
-                <b-button variant="outline-primary" @click="">市区</b-button>
+                <b-button variant="outline-primary" @click="toSelectCity()">市区</b-button>
             </div>
         </b-tab>
 

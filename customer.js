@@ -20,11 +20,9 @@ $(function(){
 			selected_prefs_str_concat:[],
 			target_index:'',
 			master_pref_hash:{},
-
 		},
 		methods:{
 			bootModal(i) {
-				console.log(i);
 				this.target_index = i;
 				this.$modal.show('area_modal');
 			},
@@ -70,6 +68,28 @@ $(function(){
 					this.selected_prefs_str[this.target_index].push(prefName)
 				}
 				Vue.set(this.selected_prefs_str_concat, this.target_index, this.selected_prefs_str[this.target_index].join(','));
+				this.$modal.hide('area_modal');
+			},
+			toSelectCity() {
+				this.is_show_spinner = 1;
+				let pref_cd_str = this.selected_prefs[this.target_index].join(',');
+				$.ajax({
+					url:`/vue/areaApi.php?area_mode=city&city_cds=${pref_cd_str}` ,
+					type:'GET',
+				}).done((res) => {
+					if (res !== null) {
+						data = JSON.parse(res);
+					}
+				}).fail((data) => {
+					alert("サーバーとの通信に失敗しました。")
+				}).always(()=>{
+					this.is_show_spinner = 0;
+				})
+			},
+			clearArea(i) {
+				this.selected_prefs[i] = [];
+				this.selected_prefs_str[i] = '';
+				Vue.set(this.selected_prefs_str_concat, i, '');
 			}
 		},
 		created:function(){
