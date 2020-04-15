@@ -49,7 +49,7 @@
                                 :id = "`city_${each_city.cityCode}`"
                                 :value="each_city.cityCode"
                                 v-model="selected_cities[target_index][pref_cd]"
-                                :disabled="disableCheckCity(pref_cd)"
+                                :disabled="disableCheckCity(pref_cd, each_city.cityCode)"
                             >
                             {{each_city.cityName}}
                             </label>

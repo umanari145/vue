@@ -19,7 +19,7 @@ $(function(){
 			selected_prefs:[],
 			selected_prefs_str:[],
 			selected_prefs_str_concat:[],
-			selected_cities:[],
+			selected_cities:{},
 			target_index:'',
 			master_pref_hash:{},
 		},
@@ -86,7 +86,8 @@ $(function(){
 							this.cities[this.target_index][pref_cd] = {};
 							this.cities[this.target_index][pref_cd] = data[pref_cd]['result'];
 							if (this.selected_cities[this.target_index][pref_cd] == null ||
-								this.selected_cities[this.target_index][pref_cd] == undefined) {
+								this.selected_cities[this.target_index][pref_cd] == undefined
+							) {
 								this.selected_cities[this.target_index][pref_cd] = [];
 							}
 						}
@@ -106,9 +107,13 @@ $(function(){
 				this.selected_prefs_str[i] = '';
 				Vue.set(this.selected_prefs_str_concat, i, '');
 			},
-			disableCheckCity(pref_cd) {
+			disableCheckCity(pref_cd, cityCode) {
 				if (this.selected_cities[this.target_index][pref_cd].length >=4) {
-					return true;
+					if (this.selected_cities[this.target_index][pref_cd].indexOf(cityCode) >= 0) {
+						return false;
+					} else {
+						return true;
+					}
 				} else {
 					return false;
 				}
@@ -116,7 +121,7 @@ $(function(){
 		},
 		created:function(){
 			for(var i = 1; i <= 4; i++) {
-				this.selected_prefs[i] =[];
+				this.selected_prefs[i] = [];
 				this.selected_cities[i] = {};
 				this.selected_prefs_str[i] =[];
 				this.selected_prefs_str_concat[i] = "";
