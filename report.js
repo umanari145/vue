@@ -16,6 +16,15 @@ $(function(){
 			has_debt_check:false,
 			last_remaining:'',
 		},
+		filters: {
+			addCommma(amount) {
+				if(Util.divNum(amount)) {
+					return Sugar.Number.format(amount);
+				} else {
+					return amount;
+				}
+			}
+		},
 		methods:{
 			remaing_debt(debt_index){
 				let debt = this.amountSumIncLump;

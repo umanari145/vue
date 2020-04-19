@@ -66,7 +66,7 @@
 			</ul>
 
 			<div>
-				借金合計 {{amountSum}}
+				<div>借金合計 {{amountSum | addCommma }}</div>
 			</div>
 		</div>
 		<hoge>
