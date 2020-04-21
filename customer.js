@@ -123,6 +123,16 @@ $(function(){
 			 */
 			forceUpdate() {
 				this.$forceUpdate();
+			},
+			allClear() {
+				for(var pref_cd in this.selected_cities[this.target_index]) {
+					this.selected_cities[this.target_index][pref_cd] = [];
+				}
+				this.forceUpdate();
+			},
+			prefClear(pref_cd) {
+				this.selected_cities[this.target_index][pref_cd] = [];
+				this.forceUpdate();
 			}
 		},
 		created:function(){

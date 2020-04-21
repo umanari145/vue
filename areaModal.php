@@ -40,8 +40,10 @@
             <div style="overflow-y:scroll;height:500px;">
                 <div class="city_wrapper">
                     <!--市区町村-->
+                    <button @click="allClear"> 全クリア</button>
                     <div>市区選択</span>
                     <div v-for="(each_city_list, pref_cd) in cities[target_index]">
+                        <button @click="prefClear(pref_cd)">部分クリック</button>
                         <div>{{master_pref_hash[pref_cd]}}</div>
                         <li v-for="(each_city) in each_city_list" style="display:inline-block;">
                             <label class="city_label" :for="`city_${each_city.cityCode}`">
