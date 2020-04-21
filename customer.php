@@ -37,7 +37,7 @@ li{
             <li v-for="i in 4" :key="i">
                 希望勤務地{{i}}
                 <button @click="bootModal(i)">地域を追加</button>
-                {{selected_prefs_str_concat[`${i}`]}}
+                {{selected_str_arr_concat[`${i}`]}}
                 <button @click="clearArea(i)">地域をクリア</button>
             </li>
         </ul>

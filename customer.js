@@ -17,19 +17,27 @@ $(function(){
 			is_city_active:false,
 			is_city_disabled:true,
 			selected_prefs:[],
-			selected_prefs_str:[],
-			selected_prefs_str_concat:[],
+			selected_str_arr:[],
+			selected_str_arr_concat:[],
 			selected_cities:{},
 			target_index:'',
 			master_pref_hash:{},
+			city_hash:{}
 		},
 		methods:{
 			bootModal(i) {
 				this.target_index = i;
+
+				this.is_city_active = false;
+				this.is_city_disabled = true;
+				this.is_pref_active = true;
+				this.is_pref_disabled = false;
+
 				this.$modal.show('area_modal');
 			},
 			getPref() {
 				this.is_show_spinner = 1;
+
 				$.ajax({
 					url:'/vue/areaApi.php?area_mode=pref',
 					type:'GET',
@@ -50,27 +58,34 @@ $(function(){
 				}).always(()=>{
 					this.is_show_spinner = 0;
 				})
+
 			},
+
+
 			disableCheckPref(prefCode) {
-				if (this.selected_prefs[this.target_index].length >= 2) {
-					if (this.selected_prefs[this.target_index].indexOf(prefCode) < 0) {
-						return true;
-					} else {
-						return false
-					}
+				if (this.selected_prefs[this.target_index].length >= 2 &&
+					this.selected_prefs[this.target_index].indexOf(prefCode) < 0) {
+					return true;
 				} else {
 					return false;
 				}
 			},
 			selectPref() {
-				this.selected_prefs_str[this.target_index] = [];
+				this.selected_str_arr[this.target_index] = [];
 				for(var i = 0 ;i < this.selected_prefs[this.target_index].length; i++) {
 					let prefCode = this.selected_prefs[this.target_index][i];
 					let prefName = this.master_pref_hash[prefCode];
-					this.selected_prefs_str[this.target_index].push(prefName)
+					this.selected_str_arr[this.target_index].push(prefName);
 				}
-				Vue.set(this.selected_prefs_str_concat, this.target_index, this.selected_prefs_str[this.target_index].join(','));
+				Vue.set(this.selected_str_arr_concat, this.target_index, this.selected_str_arr[this.target_index].join(','));
 				this.$modal.hide('area_modal');
+			},
+			backToPref() {
+				this.allClear();
+				this.is_city_active = false;
+				this.is_city_disabled = true;
+				this.is_pref_active = true;
+				this.is_pref_disabled = false;
 			},
 			toSelectCity() {
 				this.is_show_spinner = 1;
@@ -85,6 +100,13 @@ $(function(){
 						for(var pref_cd in data) {
 							this.cities[this.target_index][pref_cd] = {};
 							this.cities[this.target_index][pref_cd] = data[pref_cd]['result'];
+
+							let result_length = data[pref_cd]['result'].length;
+							for(var i = 0; i < result_length; i++) {
+								let cityData = data[pref_cd]['result'][i];
+								this.city_hash[cityData.cityCode] = cityData.cityName;
+							}
+
 							if (this.selected_cities[this.target_index][pref_cd] == null ||
 								this.selected_cities[this.target_index][pref_cd] == undefined
 							) {
@@ -104,23 +126,17 @@ $(function(){
 			},
 			clearArea(i) {
 				this.selected_prefs[i] = [];
-				this.selected_prefs_str[i] = '';
-				Vue.set(this.selected_prefs_str_concat, i, '');
+				this.selected_str_arr[i] = '';
+				Vue.set(this.selected_str_arr_concat, i, '');
 			},
 			disableCheckCity(pref_cd, cityCode) {
-				if (this.selected_cities[this.target_index][pref_cd].length >=4) {
-					if (this.selected_cities[this.target_index][pref_cd].indexOf(cityCode) >= 0) {
-						return false;
-					} else {
-						return true;
-					}
+				if (this.selected_cities[this.target_index][pref_cd].length >=4 &&
+					this.selected_cities[this.target_index][pref_cd].indexOf(cityCode) < 0) {
+					return true;
 				} else {
 					return false;
 				}
 			},
-			/**
-			 * 配列の変更
-			 */
 			forceUpdate() {
 				this.$forceUpdate();
 			},
@@ -133,14 +149,28 @@ $(function(){
 			prefClear(pref_cd) {
 				this.selected_cities[this.target_index][pref_cd] = [];
 				this.forceUpdate();
+			},
+			selectCity() {
+				this.selected_str_arr[this.target_index] = [];
+				let pref_cds = [];
+				let pref_cd_arr_str = '';
+				let selected_str_arr = [];
+				for(var pref_cd in this.selected_cities[this.target_index]) {
+					pref_cds = this.selected_cities[this.target_index][pref_cd];
+					pref_cd_arr_str = Sugar.Array(pref_cds)
+					   .map((v,k) => { return this.city_hash[v];}).join(',');
+					selected_str_arr.push(`${this.master_pref_hash[`${pref_cd}`]} ${pref_cd_arr_str}`);
+				}
+				Vue.set(this.selected_str_arr_concat, this.target_index, selected_str_arr.join(','));
+				this.$modal.hide('area_modal');
 			}
 		},
 		created:function(){
 			for(var i = 1; i <= 4; i++) {
 				this.selected_prefs[i] = [];
 				this.selected_cities[i] = {};
-				this.selected_prefs_str[i] =[];
-				this.selected_prefs_str_concat[i] = "";
+				this.selected_str_arr[i] =[];
+				this.selected_str_arr_concat[i] = "";
 			}
 		},
 		mounted:function() {

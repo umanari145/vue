@@ -37,7 +37,7 @@
         :active="is_city_active"
         :disabled="is_city_disabled"
         >
-            <div style="overflow-y:scroll;height:500px;">
+            <div style="overflow-y:scroll;height:450px;">
                 <div class="city_wrapper">
                     <!--市区町村-->
                     <button @click="allClear"> 全クリア</button>
@@ -57,6 +57,10 @@
                             {{each_city.cityName}}
                             </label>
                         </li>
+                    </div>
+                    <div style="display:flex;justify-content:center;">
+                        <b-button variant="outline-primary" @click="backToPref()">戻る</b-button>
+                        <b-button variant="outline-primary" @click="selectCity()">選択</b-button>
                     </div>
                 </div>
             </div>
