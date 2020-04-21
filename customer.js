@@ -60,8 +60,6 @@ $(function(){
 				})
 
 			},
-
-
 			disableCheckPref(prefCode) {
 				if (this.selected_prefs[this.target_index].length >= 2 &&
 					this.selected_prefs[this.target_index].indexOf(prefCode) < 0) {
@@ -127,10 +125,12 @@ $(function(){
 			clearArea(i) {
 				this.selected_prefs[i] = [];
 				this.selected_str_arr[i] = '';
+				this.selected_cities[`${i}`] = {};
 				Vue.set(this.selected_str_arr_concat, i, '');
 			},
 			disableCheckCity(pref_cd, cityCode) {
-				if (this.selected_cities[this.target_index][pref_cd].length >=4 &&
+				if (this.selected_cities[this.target_index][pref_cd] !== undefined && 
+					this.selected_cities[this.target_index][pref_cd].length >=4 &&
 					this.selected_cities[this.target_index][pref_cd].indexOf(cityCode) < 0) {
 					return true;
 				} else {
@@ -157,9 +157,11 @@ $(function(){
 				let selected_str_arr = [];
 				for(var pref_cd in this.selected_cities[this.target_index]) {
 					pref_cds = this.selected_cities[this.target_index][pref_cd];
-					pref_cd_arr_str = Sugar.Array(pref_cds)
-					   .map((v,k) => { return this.city_hash[v];}).join(',');
-					selected_str_arr.push(`${this.master_pref_hash[`${pref_cd}`]} ${pref_cd_arr_str}`);
+					if (pref_cds.length > 0) {
+						pref_cd_arr_str = Sugar.Array(pref_cds)
+					   		.map((v,k) => { return this.city_hash[v];}).join(',');
+						selected_str_arr.push(`${this.master_pref_hash[`${pref_cd}`]} ${pref_cd_arr_str}`);
+					}
 				}
 				Vue.set(this.selected_str_arr_concat, this.target_index, selected_str_arr.join(','));
 				this.$modal.hide('area_modal');
