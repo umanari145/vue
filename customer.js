@@ -117,6 +117,12 @@ $(function(){
 				} else {
 					return false;
 				}
+			},
+			/**
+			 * 配列の変更
+			 */
+			forceUpdate() {
+				this.$forceUpdate();
 			}
 		},
 		created:function(){
