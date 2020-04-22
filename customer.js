@@ -22,7 +22,13 @@ $(function(){
 			selected_cities:{},
 			target_index:'',
 			master_pref_hash:{},
-			city_hash:{}
+			city_hash:{},
+			filter_words:{
+				"1":'',
+				"2":'',
+				"3":'',
+				"4":''
+			}
 		},
 		methods:{
 			bootModal(i) {
@@ -37,7 +43,6 @@ $(function(){
 			},
 			getPref() {
 				this.is_show_spinner = 1;
-
 				$.ajax({
 					url:'/vue/areaApi.php?area_mode=pref',
 					type:'GET',
@@ -121,6 +126,14 @@ $(function(){
 				}).always(()=>{
 					this.is_show_spinner = 0;
 				})
+			},
+			filterCities(each_city_list) {
+				each_city_list = each_city_list.filter((v,i)=>{
+					let filterWord = this.filter_words[this.target_index];
+					return v['cityName'].match(filterWord) != null;
+				})
+				//filterリング自体は成功
+				console.log(each_city_list);
 			},
 			clearArea(i) {
 				this.selected_prefs[i] = [];
