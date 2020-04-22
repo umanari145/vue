@@ -125,11 +125,11 @@ $(function(){
 			clearArea(i) {
 				this.selected_prefs[i] = [];
 				this.selected_str_arr[i] = '';
-				this.selected_cities[`${i}`] = {};
+				this.selected_cities[i] = {};
 				Vue.set(this.selected_str_arr_concat, i, '');
 			},
 			disableCheckCity(pref_cd, cityCode) {
-				if (this.selected_cities[this.target_index][pref_cd] !== undefined && 
+				if (this.selected_cities[this.target_index][pref_cd] !== undefined &&
 					this.selected_cities[this.target_index][pref_cd].length >=4 &&
 					this.selected_cities[this.target_index][pref_cd].indexOf(cityCode) < 0) {
 					return true;
