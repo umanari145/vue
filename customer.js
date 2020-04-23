@@ -127,14 +127,6 @@ $(function(){
 					this.is_show_spinner = 0;
 				})
 			},
-			filterCities(each_city_list) {
-				each_city_list = each_city_list.filter((v,i)=>{
-					let filterWord = this.filter_words[this.target_index];
-					return v['cityName'].match(filterWord) != null;
-				})
-				//filterリング自体は成功
-				console.log(each_city_list);
-			},
 			clearArea(i) {
 				this.selected_prefs[i] = [];
 				this.selected_str_arr[i] = '';

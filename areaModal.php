@@ -43,15 +43,9 @@
                     <button @click="allClear"> 全クリア</button>
                     <div>市区選択</span>
                     <div v-for="(each_city_list, pref_cd) in cities[target_index]">
-                        <div>
-                            <input type="text"
-                            v-model="filter_words[`${target_index}`]"
-                            @keyup.enter="filterCities(each_city_list)"
-                            >
-                        </div>
-                        <button @click="prefClear(pref_cd)">部分クリック</button>
+                        <button @click="prefClear(pref_cd)">部分クリア</button>
                         <div>{{master_pref_hash[pref_cd]}}</div>
-                        <li v-for="(each_city) in each_city_list" style="display:inline-block;">
+                        <li v-for="each_city in each_city_list" style="display:inline-block;">
                             <label class="city_label" :for="`city_${each_city.cityCode}`">
                             <input type="checkbox"
                                 :id = "`city_${each_city.cityCode}`"
