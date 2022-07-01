@@ -1,14 +1,16 @@
+
+
 window.onload = function() {
 
-	var link = 'http://localhost/vue/kenapi.py?area_type=pref'
-	var citylink = 'http://localhost/vue/kenapi.py?area_type=city&pref='
-	var townlink = 'http://localhost/vue/kenapi.py?area_type=town&pref='
+	var link = 'http://localhost/kenapi.php?area_type=pref'
+	var citylink = 'http://localhost/kenapi.php?area_type=city&pref='
+	var townlink = 'http://localhost/kenapi.php?area_type=town&pref='
 
 	var app = new Vue({
 		el : '#app',
 		data : {
 			prefs:[],
-			selectedPref:'',
+			selectedPrefCode:'',
 			isshowpref:1,
 			cities:[],
 			selectedCities:[],
@@ -20,7 +22,8 @@ window.onload = function() {
 		},
 		methods:{
 			checkPref : function(){
-				var selectedPref = Sugar.String(this.selectedPref)
+				let selectedPrefCode = this.pref.prefCode;
+				console.log(selectedPrefCode);
 				if (!selectedPref.isBlank().raw ){
 					citylink2 = citylink + selectedPref.raw
 					this.$http.get(citylink2).then(function(response){
@@ -49,7 +52,7 @@ window.onload = function() {
 		},
 		created:function(){
 			this.$http.get(link).then(function(response){
-				this.prefs = response.data;
+				this.prefs = response.data['data'];
 			}, function(error){
 				console.log(error.statusText);
 			});
