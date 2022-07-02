@@ -3,31 +3,30 @@
 window.onload = function() {
 
 	var link = 'http://localhost/kenapi.php?area_type=pref'
-	var citylink = 'http://localhost/kenapi.php?area_type=city&pref='
-	var townlink = 'http://localhost/kenapi.php?area_type=town&pref='
+	var citylink = 'http://localhost/kenapi.php?area_type=city&pref_cd='
+	var townlink = 'http://localhost/kenapi.php?area_type=town&city_cd='
 
 	var app = new Vue({
 		el : '#app',
 		data : {
-			prefs:[],
-			selectedPrefCode:'',
+			prefs:[],		
+			selected_pref_cd:'',
 			isshowpref:1,
 			cities:[],
-			selectedCities:[],
+			// 以下を配列で定義する→checkboxは値
+			// 文字列で定義→checkboxがtrue or false
+			selected_cities_cd:[],
 			isshowcity:0,
-			towns:[],
-			selectedTowns:[],
+			selected_towns:[],
 			isshowtown:0,
-			groupCities:[]
+			group_cities:[]
 		},
 		methods:{
 			checkPref : function(){
-				let selectedPrefCode = this.pref.prefCode;
-				console.log(selectedPrefCode);
-				if (!selectedPref.isBlank().raw ){
-					citylink2 = citylink + selectedPref.raw
+				if (this.selected_pref_cd !== ''){
+					let citylink2 = citylink + this.selected_pref_cd
 					this.$http.get(citylink2).then(function(response){
-						this.cities = response.data;
+						this.cities = response.data['data'];
 						this.isshowpref = 0
 						this.isshowcity = 1
 					}, function(error){
@@ -36,12 +35,12 @@ window.onload = function() {
 				}
 			},
 			checkTown : function(){
-				if (this.selectedCities.length >0){
-					var cityStr = this.selectedCities.join(",")
-					townlink2 = townlink + this.selectedPref + '&city=' + cityStr
+				if (this.selected_cities_cd.length >0){
+					var city_str = this.selected_cities_cd.join(",")
+					let townlink2 = townlink + city_str
+					console.log(townlink2);
 					this.$http.get(townlink2).then(function(response){
-						townsRes = response.data;
-						this.groupCities = Sugar.Array(townsRes).groupBy('city').raw
+						this.group_cities = response.data['data'];
 						this.isshowcity = 0
 						this.isshowtown = 1
 					}, function(error){

@@ -3,22 +3,26 @@
 ## ファイル概要
 
 ### vueサンプル(超基礎)
-- index.html cdn読み込み+vueの一番簡単でシンプルなパターン
+- index.html+vue.js cdn読み込み+vueの一番簡単でシンプルなパターン(blur時にtodoに入れる)
 
 ### vueサンプル(基本文法)
 - d01.html 基本文法の説明
 - d01.js   基本文法の説明(javascipt)
 
+### Redis KVS(超高速:12万件の登録、読み込みがすぐなため)
+- redis
+    - RedisUtil.php Redisに関わる処理全般を記録
+    - importCSVtoRedis.php RedisUtilを読み込んで登録を行う(2秒で終わる)
+    - zenkoku.csv 住所録の元データ
 ### vueサンプル(都道府県パネル＋基本ライブラリの読み込み+vue)
 - index2.html 都道府県の選択による画面化 cdn読み込み(vue+vue.resource)
-
 - resources/js/sample_rs.js まとめて読み込みたいライブラリ(jQuery,Sugar,bootstrapなど)
 - resources/css/common.scss まとめて読み込みたいcss(bootstrap)
 - vue2.js フロント側でのvueの実際の処理
-
 - js/build.js 成果物JS
 - css/common.css 成果物CSS
 - config.js コンパイル時の設定ファイル
+
 
 #### コンパイルコマンド
 ```

@@ -20,11 +20,11 @@
 	</div>
 
 	<div id="app2">
-		<input v-model="input" v-on:keyup.enter="add">
+		<input v-model="input" @blur="add">
 		<ul>
-			<li v-for="todo in todos">
+			<li v-for="todo in todos" :key="index">
 				<span>{{todo.text}}</span>
-				<button v-on:click="remove($index)">削除</button>
+				<button v-on:click="remove(index)">削除</button>
 			</li>
 		</ul>
 	</div>

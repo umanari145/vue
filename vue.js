@@ -38,6 +38,7 @@ window.onload = function() {
 		methods:{
 			add : function(){
 				var text = this.input.trim();
+				console.log(text);
 				if (text) {
 					this.todos.push({text:text});
 				}

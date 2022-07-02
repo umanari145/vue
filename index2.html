@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href='./css/common.css'></script>
 <script src='./js/build.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.10/vue.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.0"></script>
-<script src='./vue2.js'></script>
+<script src="./vue2.js"></script>
 <title>vue</title>
 </head>
 <style type="text/css">
@@ -17,38 +17,35 @@
 </style>
 <body>
 	<div id="app">
-		{{selectedPref}}
+		{{prefs[selected_pref_cd]}}
 		<div v-show="isshowpref">
 			<button class="btn btn-primary" v-on:click="checkPref">県選択</button>
 			<div>
-				<li class="l_20" v-for="pref in prefs">
-					<input type="radio" id="pref_{{$index}}" value={{pref}} v-model="selectedPref" >
-					<label for="pref_{{$index}}">{{pref}}</label>
+				<li class="l_20" v-for="(pref_name, pref_cd) in prefs">
+					<input type="radio" :id="`pref_${pref_cd}`" :value="pref_cd" v-model="selected_pref_cd" >
+					<label :for="`pref_${pref_cd}`">{{pref_name}}</label>
 				</li>
 			</div>
 		</div>
 
-		{{selectedCities}}
 		<div v-show="isshowcity">
 			<button class="btn btn-primary" v-on:click="checkTown">市区町村選択</button>
 			<div>
-			<li class="l_20" v-for="city in cities">
-				<input type="checkbox" id="city_{{city}}" value={{city}} v-model="selectedCities">
-				<label for="city_{{city}}">{{city}}</label>
-			</li>
+				<li class="l_20" v-for="(city_name, city_cd) in cities">
+					<input type="checkbox" :id="`city_${city_cd}`" :value="city_cd" v-model="selected_cities_cd">
+					<label :for="`city_${city_cd}`">{{city_name}}</label>
+				</li>
 			</div>
 		</div>
 
-		{{selectedTowns}}
 		<div v-show="isshowtown">
-		<button v-show="selectedTowns.length > 0 " class="btn btn-primary" v-on:click="checkTown">確定する</button>
-		<button v-show="selectedTowns.length == 0 " class="btn btn-primary" disabled=disabled >確定する</button>
-			<div class="cities" v-for = " ( cityName, towns ) in groupCities">
-				<h3>{{cityName}}</h3>
-				<!--親のliと子が共に全く同じhtmlの場合二重ループがきかないので注意-->
-				<li class="town l_20" v-for=" (index2,town) in towns">
-					<input type="checkbox" id="town_{{town.town}}_{{town.city}}" value={{town.town}} v-model="selectedTowns">
-					<label for="town_{{town.town}}_{{town.city}}">{{town.town}}</label>
+			<button v-show="selected_towns.length > 0 " class="btn btn-primary" >保存する(今は動かない)</button>
+			<button v-show="selected_towns.length == 0 " class="btn btn-primary" disabled=disabled >確定する</button>
+			<div class="cities" v-for = " (towns, city_name) in group_cities">
+				<h3>{{city_name}}</h3>
+				<li class="town l_20" v-for=" (town_name, town_cd) in towns">
+					<input type="checkbox" :id="`town_${town_cd}`" :value="town_cd" v-model="selected_towns">
+					<label :for="`town_${town_cd}`">{{town_name}}</label>
 				</li>
 			</div>
 		</div>

@@ -1,0 +1,12 @@
+{
+    "name": "matsumoto/vue",
+    "authors": [
+        {
+            "name": "Norio",
+            "email": "umanari145@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/collections": "^9.19"
+    }
+}
