@@ -2,10 +2,7 @@
 var gulp = require('gulp');
 var webpack = require('gulp-webpack');
 var config = require('./config.js');
-var gulp_sass = require('gulp-sass');
-
-//defaultのタスクはcssコンパイルとjsのコンパイル
-gulp.task('default',['css','webpack']);
+var gulp_sass = require('gulp-sass')(require('sass'));
 
 gulp.task('webpack',function(){
     //js
@@ -21,3 +18,6 @@ gulp.task('css',function(){
            .pipe(gulp_sass())
            .pipe(gulp.dest(config.css.dest));
 });
+
+//defaultのタスクはcssコンパイルとjsのコンパイル
+gulp.task('default', gulp.parallel('css','webpack'));
