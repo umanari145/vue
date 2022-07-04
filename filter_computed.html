@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/vue@2.5.17"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>鉛筆: 
+            金額 <input v-model="price" type="number">
+            数量 <input v-model="quantity" type="number"> 
+        </p>
+        <p>フィルター処理例(税抜) {{totalPrice | numberWithDelimiter}}</p>
+        <p>フィルター処理例(税込) {{totalPriceWithTax | numberWithDelimiter}}</p>
+    </div>
+    <script>
+        // ロードされ、Vueがグローバル変数として定義されているか確認
+        console.assert(typeof Vue !== 'undefined');
+        var vm = new Vue({
+            el: '#app',
+            data: { // dataプロパティ
+                price:0,
+                quantity:0
+            },
+            filters: { 
+                // この節で追加したフィルタの定義(金額に対してのカンマ)
+                numberWithDelimiter: function (value) {
+                    if (!value) {
+                        return '0'
+                    }
+                    return value.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+                }
+            },
+            computed: { // 算出プロパティ
+                totalPrice: function () {
+                    return this.price * this.quantity
+                },
+                totalPriceWithTax: function () {
+                    // 算出プロパティに依存した算出プロパティも定義できる
+                    return Math.floor(this.totalPrice * 1.10)
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
