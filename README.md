@@ -118,4 +118,7 @@ https://www.amazon.co.jp/Vue-js%E5%85%A5%E9%96%80-%E5%9F%BA%E7%A4%8E%E3%81%8B%E3
 
 
 - filter_computed.html filterとcomputedについて
-- lifecycle.html
+- lifecycle.html ライフサイクルについて
+- parent_children_component.html 親子のコンポーネント 
+- pa_chi_compo_event.html emitでの子→親への伝播
+- login_component.html ログインコンポーネントのサンプル
