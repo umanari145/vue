@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue app</title>
+    <script src="https://unpkg.com/vue@2.5.17"></script>
+</head>
+
+<body>
+    <div id="app">
+        <my-page>
+            <h1 slot="header">This is my page</h1>
+            <!-- この部分のhtmlがslot name="headerに入る" -->
+            <p slot="main">
+                main_contents
+            <!-- この部分のhtmlがslot name="main"に入る" -->    
+            </p>
+            <p slot="footer">This is footer</p>
+            <!-- この部分のhtmlがslot name="footerに入る" -->
+        </my-page>
+    </div>
+
+    <script type="text/x-template" id="layout-template">
+        <div>
+            <header>
+                <slot name="header"></slot>
+            </header>
+            <main>
+                <slot name="main"></slot>
+            </main>
+            <footer>
+                <slot name="footer"></slot>
+            </footer>
+        </div>
+    </script>
+    
+    <script>
+
+new Vue({
+  el: '#app',
+  components: {
+    MyPage: {
+        template: "#layout-template"
+    }
+  }
+})
+
+    </script>
+</body>
+
+</html>

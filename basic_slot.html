@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue app</title>
+    <script src="https://unpkg.com/vue@2.5.17"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>コンテンツ有りでコンポーネントを設置する(slotへの代入)</p>
+        <my-button> 送信する </my-button>
+        <p>コンテンツ無しでコンポーネントを設置する(初期値をそのまま使う)</p>
+        <my-button></my-button>
+    </div>
+    <script>
+        var MyButton = {
+  template: `
+    <button>
+    <!-- 親コンポーネントで渡されたコンテンツに差し替えられる --> <slot>OK</slot>
+    </button>
+  `
+}
+new Vue({
+  el: '#app',
+  components: {
+    MyButton: MyButton
+  }
+})
+
+    </script>
+</body>
+
+</html>
