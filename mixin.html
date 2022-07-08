@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue app</title>
+    <script src="https://unpkg.com/vue@2.5.17"></script>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <icon-share-button></icon-share-button>
+        </div>
+
+        <div style="margin-top: 15px;">
+            <text-share-button></text-share-button>
+        </div>
+    </div>
+    <script>
+// ミックスインの定義
+// PHP Traitに近い・・・
+// 共通の動きをするんだけどビューが違う(modal系で使えそう？)
+var Sharable = {
+  data: function() {
+    return {
+      _isProcessing: false
+    }
+  },
+  created: function () {
+    console.log('Sharable ミックスインのフックが呼ばれました ')
+  },
+  methods: {
+    share: function() {
+      if (this._isProcessing) {
+        return
+      }
+      if (!window.confirm('シェアしますか?')) {
+        return
+      }
+      this._isProcessing = true
+      // 実際はここでSNSのSDKのAPIを呼び出す
+      setTimeout(() => {
+        window.alert(' シェアしました ')
+        this._isProcessing = false
+      }, 300)
+    }
+  }
+}
+var IconShareButton = {
+  mixins: [Sharable],
+  created: function () {
+    console.log('IconShareButton のフックが呼ばれました ')
+  },
+  template: `<button @click="share"><i class="fas fa-share-square"></i></button>`
+}
+var TextShareButton = {
+  mixins: [Sharable],
+  created: function () {
+    console.log('TextShareButton のフックが呼ばれました ')
+  },
+  template: `<button @click="share">{{ buttonLabel }}</button>`,
+  data: function() {
+    return {
+      buttonLabel: 'シェアする'
+    }
+  }
+}
+
+new Vue({
+  el: '#app',
+  components: {
+    IconShareButton,
+    TextShareButton
+  }
+})
+    </script>
+</body>
+
+</html>

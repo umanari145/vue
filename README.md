@@ -135,3 +135,8 @@ https://www.amazon.co.jp/Vue-js%E5%85%A5%E9%96%80-%E5%9F%BA%E7%A4%8E%E3%81%8B%E3
     - scoped_slot.html
 - custom_directive 独自のディレクティブ(v-if,v-showみたいなものを独自に作る)
     - custom_directive
+- mixin 継承に近い
+    - mixin.html 通常のmixin (再利用可能なパーツの内部的な動きなど)
+    - global_mixin.html 全パーツ共通での動き(loginなど)
+
+
