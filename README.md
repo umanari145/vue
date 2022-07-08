@@ -133,3 +133,5 @@ https://www.amazon.co.jp/Vue-js%E5%85%A5%E9%96%80-%E5%9F%BA%E7%A4%8E%E3%81%8B%E3
     - basic_slot.html
     - named_slot.html
     - scoped_slot.html
+- custom_directive 独自のディレクティブ(v-if,v-showみたいなものを独自に作る)
+    - custom_directive

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue app</title>
+    <script src="https://unpkg.com/vue@2.5.17"></script>
+</head>
+
+<body>
+    <div id="app">
+        
+        <div>
+            <!-- 存在しない画像の時に決まった画像を出す -->
+            <img v-fallback-image.error_src="noImageURL" src="./logo.png" :alt="altText">
+        </div>
+
+        <div>
+            <!-- 存在する場合はそのまま表示 -->
+            <img v-fallback-image.error_src="noImageURL" error_src="noImageURL" src="https://effectorsoyu.net/image/head_titile.gif" :alt="altText">
+        </div>
+    </div>
+    <script>
+Vue.directive('fallback-image', {
+  bind: function (el, binding) {
+    console.log('el', el) //要素の情報
+    console.log('bind', binding)
+    var once = binding.modifiers.once // 修飾子
+    el.addEventListener('error', function onError () {
+      // 値として指定されたno imageのURLをimg要素のsrc属性値として設定する
+      el.src = binding.value
+      
+      // 以下を定義しないとerrorになったときに、永久稼働し続ける。(noImageURLを存在しないURLにするとわかりやすい)
+      if (once) {
+        el.removeEventListener('error', onError)
+      }
+    })
+  }
+})
+
+new Vue({
+  el: '#app',
+  data: function () {
+    return {
+      altText: 'logo',
+      noImageURL: 'https://dummyimage.com/400x400/000/ffffff.png&text=no+image'
+    }
+  }
+})
+    </script>
+</body>
+
+</html>
