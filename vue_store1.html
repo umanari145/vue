@@ -64,7 +64,7 @@ Vue.component('vuex-sample', {
   },
   computed: {
     appNumber() {
-      //直アクセス  非推奨
+      //直アクセス filter系の処理がない場合はこっちでもOK
       //return this.$store.state.appNumber;
       
       //getterでアクセス

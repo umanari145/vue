@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/vue@2.5.17"></script>
+    <script src="https://unpkg.com/vuex@3.6.2"></script>
+</head>
+
+<body>
+
+<div id="contents">
+    <vuex-sample></vuex-sample>
+</div>
+
+<script>
+  // taskのstore
+const store = new Vuex.Store({
+    state: {
+      // タスクの初期ステート
+      tasks: [
+        {
+          id: 1,
+          name: '牛乳を買う',
+          labelIds: [1, 2],
+          done: false
+        },
+        {
+          id: 2,
+          name: 'Vue の本を買う',
+          labelIds: [1, 3],
+          done: false
+        }
+      ],
+  
+      // ラベルの初期ステート
+      labels: [
+        {
+          id: 1,
+          text: '買い物'
+        },
+        {
+          id: 2,
+          text: '食料'
+        },
+        {
+          id: 3,
+          text: '本'
+        }
+      ],
+  
+      // 次に追加するタスク、ラベルの ID
+      // 実際のアプリではサーバーで生成したり、UUID を使ったりする
+      nextTaskId: 3,
+      nextLabelId: 4,
+  
+      // フィルターするラベルの ID
+      filter: null
+    },
+  
+    getters: {
+      // フィルター後のタスクを返す
+      filteredTasks (state) {
+        // ラベルが選択されていなければそのままの一覧を返す
+        if (!state.filter) {
+          return state.tasks
+        }
+  
+        // 選択されているラベルでフィルタリングする
+        return state.tasks.filter(task => {
+          return task.labelIds.indexOf(state.filter) >= 0
+        })
+      }
+    },
+  
+    mutations: {
+      // タスクを追加する
+      addTask (state, { name, labelIds }) {
+        state.tasks.push({
+          id: state.nextTaskId,
+          name,
+          labelIds,
+          done: false
+        })
+  
+        // 次に追加されるタスクに付与する ID を更新する
+        state.nextTaskId++
+      },
+  
+      // タスクの完了状態を変更する
+      toggleTaskStatus (state, { id }) {
+        const filtered = state.tasks.filter(task => {
+          return task.id === id
+        })
+  
+        filtered.forEach(task => {
+          task.done = !task.done
+        })
+      },
+  
+      // ラベルを追加する
+      addLabel (state, { text }) {
+        state.labels.push({
+          id: state.nextLabelId,
+          text
+        })
+  
+        // 次に追加されるラベルに付与する ID を更新する
+        state.nextLabelId++
+      },
+  
+      // フィルタリング対象のラベルを変更する
+      changeFilter (state, { filter }) {
+        state.filter = filter
+      },
+  
+      // ステートを復元する
+      restore (state, { tasks, labels, nextTaskId, nextLabelId }) {
+        state.tasks = tasks
+        state.labels = labels
+        state.nextTaskId = nextTaskId
+        state.nextLabelId = nextLabelId
+      }
+    },
+  
+    // api系(非同期系)
+    actions: {
+      // ローカルストレージにステートを保存する
+      save ({ state }) {
+        const data = {
+          tasks: state.tasks,
+          labels: state.labels,
+          nextTaskId: state.nextTaskId,
+          nextLabelId: state.nextLabelId
+        }
+        localStorage.setItem('task-app-data', JSON.stringify(data))
+      },
+  
+      // ローカルストレージからステートを復元する
+      restore ({ commit }) {
+        const data = localStorage.getItem('task-app-data')
+        if (data) {
+          commit('restore', JSON.parse(data))
+        }
+      }
+    }
+});
+</script>
+
+<!-- テンプレート -->
+<!-- type="text/x-template" は componentをわかりやすくかける-->
+<script type="text/x-template" id="main_view">
+  <div>
+    <h2>タスク一覧</h2>
+
+    <div>ラベル(選択するとタスクがフィルターされます。)</div>
+    <li v-for="label in labels" v-bind:key="label.id" style="list-style-type: none;">
+      <input type="radio" v-bind:checked="label.id === filter" v-on:change="changeFilter(label.id)" :id="`labels_${label.id}`">
+      <label :for="`labels_${label.id}`" style="margin-right:20px;">{{ label.text }}</label>
+    </li>
+    <li style="list-style-type: none;">
+      <input type="radio" v-bind:checked="filter == null" v-on:change="changeFilter(null)" id="labels_99">
+      <label for="labels_99">フィルターしない</label>
+    </li>
+
+    <ul>
+      <li style="list-style-type: none;">タスク名  - ラベル</li>
+      <li v-for="task in tasks" v-bind:key="task.id">
+        <input type="checkbox" v-bind:checked="task.done" v-on:change="toggleTaskStatus(task)">
+        {{ task.name }}
+        -
+        <span v-for="id in task.labelIds" v-bind:key="id" style="border:1px solid #000;margin-right:5px;">
+          {{ getLabelText(id) }}
+        </span>
+      </li>
+    </ul>
+
+    <form v-on:submit.prevent="addTask">
+      <input type="text" v-model="newTaskName" placeholder="新しいタスク(Enterで追加になります)" style="width:300px;">
+    </form>
+
+    <h2>ラベル一覧(タスク追加時に付与されます)</h2>
+    <ul>
+      <li v-for="label in labels" v-bind:key="label.id">
+        <input type="checkbox" v-bind:value="label.id" v-model="newTaskLabelIds">
+        {{ label.text }}
+      </li>
+    </ul>
+
+    <form v-on:submit.prevent="addLabel">
+      <input type="text" v-model="newLabelText" placeholder="新しいラベル(Enterで追加になります)" style="width:300px;">
+    </form>
+
+
+    <h2>保存と復元(全状態を保存、復元します。)</h2>
+    <button type="button" v-on:click="save">保存</button>
+    <button type="button" v-on:click="restore">復元</button>
+  </div>
+</script>
+
+<script>
+// コンポーネント定義
+Vue.component('vuex-sample', {
+  template: '#main_view',
+  data(){
+    return {
+      // 入力中の新しいタスク名を一時的に保持する
+      newTaskName: '',
+
+      // 新しいタスクに紐づくラベル一覧を一時的に保持する
+      newTaskLabelIds: [],
+
+      // 入力中の新しいラベル名を一時的に保持する
+      newLabelText: ''
+    }
+  },
+  // storeの値を参照する場合は以下のようなcomputedを使った参照処理を行う
+  computed: {
+    tasks () {
+      // filteringされているのでgettersでアクセス
+      return this.$store.getters.filteredTasks
+    },
+
+    labels () {
+      // ただのプロパティなのでgettersではなく直でアクセス
+      return this.$store.state.labels
+    },
+
+    filter () {
+      // ただのプロパティなのでgettersではなく直でアクセス
+      return this.$store.state.filter
+    }
+  },
+  methods:{
+    // タスクを追加する
+    addTask () {
+      // `addTask` ミューテーションをコミット
+      this.$store.commit('addTask', {
+        name: this.newTaskName,
+        labelIds: this.newTaskLabelIds
+      })
+      this.newTaskName = ''
+      this.newTaskLabelIds = []
+    },
+
+    // タスクの完了状態を更新する
+    toggleTaskStatus (task) {
+      // `toggleTaskStatus` ミューテーションをコミット
+      this.$store.commit('toggleTaskStatus', {
+        id: task.id
+      })
+    },
+
+    // ラベルを追加する
+    addLabel () {
+      // `addLabel` ミューテーションをコミット
+      this.$store.commit('addLabel', {
+        text: this.newLabelText
+      })
+      this.newLabelText = ''
+    },
+
+    // ラベルの ID から、そのラベルのテキストを返す
+    getLabelText (id) {
+      const label = this.labels.filter(label => label.id === id)[0]
+      return label ? label.text : ''
+    },
+
+    // フィルターする対象のラベルを変更する apiではなく同期系の値を変更するタイプはmutationsを直で叩く
+    changeFilter (labelId) {
+      // `changeFilter` ミューテーションをコミット
+      this.$store.commit('changeFilter', {
+        filter: labelId
+      })
+    },
+
+    // 現在の状態を保存する
+    save () {
+      // `save` アクションをコミット　api系はdispatch
+      this.$store.dispatch('save')
+    },
+
+    // 保存されている状態を復元する
+    restore () {
+      // `restore` アクションをコミット api系はdispatch
+      this.$store.dispatch('restore')
+    }
+  }
+})
+
+new Vue({
+  el: "#contents",
+  store
+});
+</script>
+</body>
+</html>
