@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/vue@2.5.17"></script>
+    <script src="https://unpkg.com/vuex@3.6.2"></script>
+</head>
+
+<body>
+
+<div id="contents">
+    <vuex-sample></vuex-sample>
+</div>
+
+<script>
+const store = new Vuex.Store({
+    state:{
+        appNumber: 10
+    },
+    getters:{
+        accessNumber(state) {
+            return state.appNumber
+        }
+    },
+    // 同期処理のみを行う
+    mutations:{
+        increment(state, value) {
+            state.appNumber = state.appNumber + parseInt(value)
+        }
+    },
+    // 非同期や外部からの値の変化(promiseなどが絡むことが一般的)
+    actions:{
+        incrementAction(ctx, value) {
+            ctx.commit('increment', value)
+        }
+    }
+});
+</script>
+
+<!-- テンプレート -->
+<!-- type="text/x-template" は componentをわかりやすくかける-->
+<script type="text/x-template" id="main_view">
+    <div id="main_view">
+        <div>
+            appNumber:{{appNumber}}
+        </div>
+        <input v-model="input_number" type="number">
+        <button @click="changeNumber()">増やす</button>    
+    </div>
+</script>
+
+<script>
+// コンポーネント定義
+Vue.component('vuex-sample', {
+  template: '#main_view',
+  data: function () {
+    return {
+      input_number: 0,
+    }
+  },
+  computed: {
+    appNumber() {
+      //直アクセス  非推奨
+      //return this.$store.state.appNumber;
+      
+      //getterでアクセス
+      return this.$store.getters.accessNumber;
+    }
+  },
+  methods:{
+    changeNumber(){
+        // 直でmutationを叩く　だめ
+        //this.$store.commit('increment', this.input_number);
+        // 呼び出し
+        this.$store.dispatch('incrementAction', this.input_number)
+    }
+  }
+})
+
+new Vue({
+  el: "#contents",
+  store
+});
+</script>
+</body>
+</html>

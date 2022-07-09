@@ -139,4 +139,5 @@ https://www.amazon.co.jp/Vue-js%E5%85%A5%E9%96%80-%E5%9F%BA%E7%A4%8E%E3%81%8B%E3
     - mixin.html 通常のmixin (再利用可能なパーツの内部的な動きなど)
     - global_mixin.html 全パーツ共通での動き(loginなど)
 
-
+- vue_store1.html vue_storeを使ったサンプル (storeに関して,state,getters,mutations,actionsを実装)
+- vue_store2.html vue_storeを使ったサンプル
